@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-20T00:00:00Z",
+  "title": "Design System: The lines",
+  "extensions": {
+    "colorMeta": {
+      "paper-ink": { "role": "primary", "displayName": "Paper Ink", "canonical": "var(--color-neutral-100)", "tonalRamp": ["#262626", "#404040", "#5c5c5c", "#7a7a7a", "#999999", "#b8b8b8", "#d6d6d6", "#f5f5f5"] },
+      "button-ink": { "role": "primary", "displayName": "Button Ink", "canonical": "var(--color-neutral-800)", "tonalRamp": ["#0f0f0f", "#1a1a1a", "#262626", "#3a3a3a", "#525252", "#737373", "#a3a3a3", "#e5e5e5"] },
+      "ground": { "role": "neutral", "displayName": "Ground", "canonical": "color-mix(in srgb, var(--color-neutral-950) 95%, white)", "tonalRamp": ["#0a0a0a", "#161616", "#1f1f1f", "#2a2a2a", "#3d3d3d", "#5c5c5c", "#8a8a8a", "#c2c2c2"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "color-mix(in srgb, var(--foreground) 70%, transparent)", "tonalRamp": ["#2e2e2e", "#454545", "#5e5e5e", "#787878", "#949494", "#b2b2b2", "#d0d0d0", "#ececec"] },
+      "ink-muted": { "role": "neutral", "displayName": "Muted Ink", "canonical": "color-mix(in srgb, var(--color-neutral-500) 90%, white)", "tonalRamp": ["#262626", "#383838", "#4d4d4d", "#666666", "#818181", "#a0a0a0", "#c4c4c4", "#e8e8e8"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "color-mix(in srgb, white 6%, transparent)", "tonalRamp": ["#161616", "#1c1c1c", "#242424", "#2e2e2e", "#3a3a3a", "#4a4a4a", "#5e5e5e", "#787878"] },
+      "field-well": { "role": "neutral", "displayName": "Field Well", "canonical": "color-mix(in srgb, white 2.56%, transparent)", "tonalRamp": ["#121212", "#1c1c1c", "#262626", "#333333", "#454545", "#5e5e5e", "#808080", "#a8a8a8"] },
+      "focus-ring": { "role": "neutral", "displayName": "Focus Ring", "canonical": "var(--color-neutral-500)", "tonalRamp": ["#262626", "#3a3a3a", "#525252", "#737373", "#8f8f8f", "#a3a3a3", "#c4c4c4", "#e5e5e5"] },
+      "night": { "role": "secondary", "displayName": "Night", "canonical": "#110d24", "tonalRamp": ["#08061a", "#110d24", "#1d1838", "#2b2550", "#3e3769", "#585183", "#7b75a3", "#a6a2c6"] },
+      "dusk-violet": { "role": "secondary", "displayName": "Dusk Violet", "canonical": "#3a2a6b", "tonalRamp": ["#1a1132", "#2a1d4f", "#3a2a6b", "#4f3e86", "#6a5aa2", "#8a7dbd", "#b0a7d7", "#d8d2ee"] },
+      "dusk-plum": { "role": "secondary", "displayName": "Dusk Plum", "canonical": "#7a3361", "tonalRamp": ["#33122a", "#521d44", "#7a3361", "#96497c", "#b06598", "#c788b3", "#ddafcf", "#f0d6e8"] },
+      "dusk-ember": { "role": "secondary", "displayName": "Dusk Ember", "canonical": "#e0703f", "tonalRamp": ["#4a1d0b", "#7a3316", "#a84c24", "#e0703f", "#ea8c62", "#f2a988", "#f8c8b2", "#fde6db"] },
+      "dusk-gold": { "role": "secondary", "displayName": "Dusk Gold", "canonical": "#ffd180", "tonalRamp": ["#4d3608", "#7a5814", "#a87c22", "#d6a443", "#f2bf62", "#ffd180", "#ffe2ad", "#fff2d9"] },
+      "tile": { "role": "tertiary", "displayName": "Tile", "canonical": "#1f1f1f", "tonalRamp": ["#0f0f0f", "#161616", "#1f1f1f", "#2a2a2a", "#3d3d3d", "#5c5c5c", "#8a8a8a", "#c2c2c2"] },
+      "sharing-red": { "role": "tertiary", "displayName": "Sharing Red", "canonical": "#9b2c2c", "tonalRamp": ["#3a0f0f", "#5e1a1a", "#7d2323", "#9b2c2c", "#b84a4a", "#cf7474", "#e3a3a3", "#f4d3d3"] },
+      "on-red": { "role": "tertiary", "displayName": "On Red", "canonical": "#ffffff", "tonalRamp": ["#262626", "#404040", "#5c5c5c", "#7a7a7a", "#999999", "#b8b8b8", "#d6d6d6", "#ffffff"] },
+      "control-green": { "role": "tertiary", "displayName": "Control Green", "canonical": "#5ac878", "tonalRamp": ["#103a1c", "#1c5c2e", "#2b8044", "#40a45d", "#5ac878", "#82d899", "#addfbc", "#d9f2e0"] }
+    },
+    "typographyMeta": {
+      "name": { "displayName": "Name", "purpose": "The line's name in the hero, in the 5x7 pixel face from tools/logo.py; 42px, 56px from 640px, multiples of 7 so font pixels stay whole." },
+      "tagline": { "displayName": "Tagline", "purpose": "The line's one line under the name; 18px, 20px from 640px. The only Inter text above body size." },
+      "body": { "displayName": "Body", "purpose": "All reading text, Paper Ink or Soft Ink, prose capped at 65ch." },
+      "title": { "displayName": "Title", "purpose": "Every heading: weight 500 at body size." },
+      "control": { "displayName": "Control", "purpose": "coss button and input text; 16px below 640px, 14px above." },
+      "mono": { "displayName": "Mono", "purpose": "File names, round trip, short fingerprints, list markers." },
+      "code": { "displayName": "Code", "purpose": "A computer's full code, three lines of grouped quads, selectable as a whole." }
+    },
+    "shadows": [
+      { "name": "window-lift", "value": "inset 0 0 0 1px var(--border), 0 24px 48px -24px rgb(0 0 0 / 0.6)", "purpose": "Only on a copy of an app's window standing in the night field." },
+      { "name": "prompt-edge", "value": "inset 0 0 0 1px var(--border)", "purpose": "The prompt card over its 55% black dim; containers on the ground." },
+      { "name": "paper-button", "value": "inset 0 1px rgb(255 255 255 / 0.16), 0 1px 2px rgb(245 245 245 / 0.24)", "purpose": "coss primary button at rest; removed on press and when disabled." }
+    ],
+    "motion": [
+      { "name": "ease-out-strong", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Button press and prompt arrival." },
+      { "name": "press", "value": "scale 0.96, 150ms ease-out-strong", "purpose": "A pressed button dips; off under reduced motion." },
+      { "name": "appear", "value": "opacity 0 and scale 0.96 to 1, 200ms ease-out-strong (@starting-style)", "purpose": "A prompt arriving; fade only under reduced motion." },
+      { "name": "field-develop", "value": "1400ms, exponential ease-out (1 - 2^(-10k)), left-to-right front with Bayer-order landing", "purpose": "The night field develops once; drawn at once under reduced motion." },
+      { "name": "link-forming", "value": "2400ms sweep cycle, repaint every 50ms", "purpose": "The link meter while a connection forms." },
+      { "name": "link-settle", "value": "700ms front, then still", "purpose": "A live link filling in to its quality." },
+      { "name": "link-lost", "value": "drift one column every 120ms", "purpose": "Sparse violet while the link is lost." },
+      { "name": "stats-fade", "value": "opacity 300ms", "purpose": "The route and round trip appearing under the link." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Paper-ink button, one per group: Download, Copy code, Connect, Accept.",
+      "html": "<button class=\"ds-btn-primary\">Copy code</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 11px; border: 1px solid #f5f5f5; border-radius: 10px; background: #f5f5f5; color: #262626; font: 500 14px/1 Inter, sans-serif; box-shadow: inset 0 1px rgb(255 255 255 / 0.16), 0 1px 2px rgb(245 245 245 / 0.24); cursor: pointer; transition: scale 150ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-primary:hover { background: rgb(245 245 245 / 0.9); } .ds-btn-primary:active { scale: 0.96; box-shadow: none; } .ds-btn-primary:focus-visible { outline: 2px solid #737373; outline-offset: 1px; }"
+    },
+    {
+      "name": "Download Button",
+      "kind": "button",
+      "refersTo": "button-primary-xl",
+      "description": "The hero's download for the detected system, with its icon.",
+      "html": "<button class=\"ds-btn-xl\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/></svg>Download for Windows</button>",
+      "css": ".ds-btn-xl { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 15px; border: 1px solid #f5f5f5; border-radius: 10px; background: #f5f5f5; color: #262626; font: 500 16px/1 Inter, sans-serif; box-shadow: inset 0 1px rgb(255 255 255 / 0.16), 0 1px 2px rgb(245 245 245 / 0.24); cursor: pointer; transition: scale 150ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-btn-xl svg { opacity: 0.8; } .ds-btn-xl:hover { background: rgb(245 245 245 / 0.9); } .ds-btn-xl:active { scale: 0.96; box-shadow: none; } .ds-btn-xl:focus-visible { outline: 2px solid #737373; outline-offset: 1px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The second choice beside a primary (Decline).",
+      "html": "<button class=\"ds-btn-outline\">Decline</button>",
+      "css": ".ds-btn-outline { height: 32px; padding: 0 11px; border: 1px solid rgb(255 255 255 / 0.08); border-radius: 10px; background: #1c1c1c; color: #f5f5f5; font: 500 14px/1 Inter, sans-serif; cursor: pointer; transition: scale 150ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms; } .ds-btn-outline:hover { background: #222222; } .ds-btn-outline:active { scale: 0.96; } .ds-btn-outline:focus-visible { outline: 2px solid #737373; outline-offset: 1px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Quiet actions: Cancel, Disconnect.",
+      "html": "<button class=\"ds-btn-ghost\">Disconnect</button>",
+      "css": ".ds-btn-ghost { height: 28px; padding: 0 9px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #b2b2b2; font: 500 14px/1 Inter, sans-serif; cursor: pointer; transition: scale 150ms cubic-bezier(0.23, 1, 0.32, 1), background-color 150ms; } .ds-btn-ghost:hover { background: rgb(255 255 255 / 0.04); } .ds-btn-ghost:active { scale: 0.96; } .ds-btn-ghost:focus-visible { outline: 2px solid #737373; outline-offset: 1px; }"
+    },
+    {
+      "name": "Code Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Where the helper pastes a code, in Geist Mono.",
+      "html": "<input class=\"ds-input\" placeholder=\"Paste their code\" />",
+      "css": ".ds-input { height: 30px; padding: 0 11px; border: 1px solid rgb(255 255 255 / 0.08); border-radius: 10px; background: #1c1c1c; color: #f5f5f5; font: 400 14px/30px 'Geist Mono', monospace; outline: none; transition: box-shadow 150ms; } .ds-input::placeholder { color: rgb(129 129 129 / 0.72); } .ds-input:focus-visible { border-color: #737373; box-shadow: 0 0 0 3px rgb(115 115 115 / 0.24); } .ds-input:disabled { opacity: 0.64; }"
+    },
+    {
+      "name": "Language Switch",
+      "kind": "nav",
+      "description": "Footer: each language named in its own language, current one in full ink.",
+      "html": "<nav class=\"ds-lang\"><a aria-current=\"true\" href=\"#\">English</a><a href=\"#\">Português</a></nav>",
+      "css": ".ds-lang { display: flex; gap: 16px; font: 400 16px/1.5 Inter, sans-serif; } .ds-lang a { color: #818181; text-decoration: none; transition: color 150ms; } .ds-lang a:hover, .ds-lang a[aria-current=true] { color: #f5f5f5; } .ds-lang a:focus-visible { outline: 2px solid #737373; }"
+    },
+    {
+      "name": "Inline Link",
+      "kind": "custom",
+      "description": "Paper-ink link with a quiet underline that rises on hover.",
+      "html": "<a class=\"ds-link\" href=\"#\">Other systems</a>",
+      "css": ".ds-link { color: #f5f5f5; font: 400 16px/1.5 Inter, sans-serif; text-decoration: underline; text-decoration-color: rgb(245 245 245 / 0.25); text-underline-offset: 3px; transition: text-decoration-color 150ms; } .ds-link:hover { text-decoration-color: rgb(245 245 245 / 0.6); } .ds-link:focus-visible { outline: 2px solid #737373; }"
+    },
+    {
+      "name": "Window Copy",
+      "kind": "card",
+      "refersTo": "window-frame",
+      "description": "A copy of an app's window standing in the night field, with its top bar (the mark stands in as a night square here).",
+      "html": "<div class=\"ds-window\"><div class=\"ds-window-bar\"><span class=\"ds-window-mark\"></span><span class=\"ds-window-tab\">Deskline</span></div><div class=\"ds-window-body\"><strong>Your code</strong><p>Send it to whoever is helping you.</p><code>ryq6  yejm  78xm  85cz  69oi</code></div></div>",
+      "css": ".ds-window { min-height: 23rem; border-radius: 14px; background: #161616; color: #f5f5f5; font: 400 16px/1.5 Inter, sans-serif; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06), 0 24px 48px -24px rgb(0 0 0 / 0.6); overflow: hidden; } .ds-window-bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; } .ds-window-mark { width: 32px; height: 32px; background: #110d24; } .ds-window-tab { position: relative; font-weight: 500; } .ds-window-tab::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: #f5f5f5; } .ds-window-body { display: flex; flex-direction: column; gap: 4px; padding: 24px 16px 20px; } .ds-window-body p { margin: 0; color: #b2b2b2; } .ds-window-body code { margin-top: 16px; font: 400 18px/1.625 'Geist Mono', monospace; letter-spacing: -0.025em; }"
+    },
+    {
+      "name": "Sharing Bar",
+      "kind": "custom",
+      "refersTo": "sharing-bar",
+      "description": "Deskline's red bar inside the window copy: someone is in, and how to stop them.",
+      "html": "<div class=\"ds-sharing\"><p>Ana's PC controls this computer</p><button class=\"ds-sharing-ghost\">Take back control</button><button class=\"ds-sharing-stop\">Stop sharing</button></div>",
+      "css": ".ds-sharing { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; padding: 8px 16px; background: #9b2c2c; color: #ffffff; font: 400 16px/1.5 Inter, sans-serif; } .ds-sharing p { margin: 0 auto 0 0; font-weight: 500; } .ds-sharing button { height: 28px; padding: 0 9px; border-radius: 10px; font: 500 14px/1 Inter, sans-serif; cursor: pointer; transition: scale 150ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-sharing-ghost { border: 1px solid transparent; background: transparent; color: #ffffff; } .ds-sharing-ghost:hover { background: rgb(255 255 255 / 0.2); } .ds-sharing-stop { border: 1px solid #ffffff; background: #ffffff; color: #9b2c2c; } .ds-sharing-stop:hover { background: rgb(255 255 255 / 0.9); } .ds-sharing button:active { scale: 0.96; } .ds-sharing button:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }"
+    },
+    {
+      "name": "Link Meter at Rest",
+      "kind": "custom",
+      "description": "The band joining two windows before they connect: 2px violet dots on the 3px grid, half of them lit (the real meter is canvas-drawn in Bayer order; this approximates it with every other column).",
+      "html": "<div class=\"ds-link-rest\" aria-hidden=\"true\"></div>",
+      "css": ".ds-link-rest { width: 144px; height: 32px; background: linear-gradient(90deg, #3a2a6b 2px, transparent 2px) 0 0 / 6px 3px repeat; -webkit-mask: linear-gradient(#000 2px, transparent 2px) 0 0 / 3px 3px repeat; mask: linear-gradient(#000 2px, transparent 2px) 0 0 / 3px 3px repeat; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Banner Becomes the Page",
+    "overview": "Each line's README banner, the night field of Bayer-dithered dusk dots with the line's 32x32 mark in the glow and its name in the 5x7 pixel face, is the top of the page, live. The name, the line, the download and the line's running piece sit inside that field as working parts. Below it the night dithers out onto luannzin.com's neutral ground, and the rest of the page is his site's interface: one near-black ground, paper ink in three tiers, white-alpha hairlines, Inter at one size.\n\nThe page is dark only, like the apps. Colour lives in the art (the field, the marks, the link between windows) and, inside a copy of an app's own window, in that app's own meanings. The chrome of the page never takes a hue. Density is low: a narrow column of words on the left of the field, sections on the ground set with their title beside them, generous space between them.\n\nA line brings its words, its mark and its live piece; the page around them is shared (`Line` and `Part`). New lines inherit the template rather than designing their own.",
+    "keyCharacteristics": [
+      "A night field (#110d24) of 2px dots on a 3px grid, dithered toward a dusk glow around the line's mark; calm under the words.",
+      "The night ends in a Bayer dither onto the ground, never on a straight edge.",
+      "Inter at one size, hierarchy by weight 500 and ink tier; Geist Mono for codes, file names and measurements.",
+      "One paper-ink button per group.",
+      "Marks and pixel type at whole-pixel multiples only.",
+      "Every motion has a reduced-motion state that is complete, not missing."
+    ],
+    "rules": [
+      { "name": "The Colour Is the Art's Rule", "body": "The page's own chrome (text, links, buttons, rules, selection, focus) stays on the neutral axis. A hue appears only as dithered dots, or as an app's own meaning inside a copy of its window.", "section": "colors" },
+      { "name": "The Every Grey Is a Dither Rule", "body": "In the art, a lighter or darker passage is made by dot density in Bayer order, never by a fill, gradient, blur or opacity. The night itself ends the same way.", "section": "colors" },
+      { "name": "The One Meaning Rule", "body": "Inside a window copy, red means someone is in and green means you have control. Neither is used for anything else, on the window or off it.", "section": "colors" },
+      { "name": "The One Size Rule", "body": "Inter is 16px for everything you read. A heading gets weight 500 and full ink, never a larger size; the tagline is the single exception.", "section": "typography" },
+      { "name": "The Whole Pixel Rule", "body": "Pixel type and pixel marks scale only by whole multiples: the name in multiples of 7px, the 32x32 mark at 1x, 3x and 8x, always with `image-rendering: pixelated` and crisp edges.", "section": "typography" },
+      { "name": "The Inset Edge Rule", "body": "Containers on the ground are edged by a 1px inset ring or a hairline rule. An outer shadow belongs only to an app window shown floating in the field.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** build a new line from `Line` and `Part`, bringing only its words, its 32x32 mark and its live piece.",
+      "**Do** draw every passage of the art in 2px dots on the 3px grid, in the 4x4 Bayer order, from the night and the four dusk colours only.",
+      "**Do** end the night in a dither onto the ground.",
+      "**Do** set the line's name in the pixel face at a multiple of 7px, with the text name available to screen readers.",
+      "**Do** keep one paper-ink button per group, and put the detected system's file first, with its exact file name and what the system says the first time.",
+      "**Do** give every motion a reduced-motion state that still shows the result: field drawn at once, link strips still, prompts fading without scale.",
+      "**Do** keep every string in English and Brazilian Portuguese."
+    ],
+    "donts": [
+      "**Don't** give the page's chrome a hue: no accent links, buttons, focus rings or selection colours.",
+      "**Don't** use the dusk as a fill, gradient or blur, or anywhere it isn't dots.",
+      "**Don't** use a window copy's red or green outside that window, or for anything but its meaning.",
+      "**Don't** raise an Inter heading above 16px; use weight 500 and full ink.",
+      "**Don't** scale a mark or the pixel name by fractional amounts or smooth it.",
+      "**Don't** add a light theme; the lines are dark, like the apps.",
+      "**Don't** show the app through a GIF, video or mock; a line's live piece runs for real."
+    ]
+  }
+}
