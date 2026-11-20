@@ -166,8 +166,8 @@ export default {
       address: {
         them: { en: "9-digit address", pt: "Endereço de 9 dígitos" },
         us: {
-          en: "A 52-character code. Nobody types it: copy, paste, and it's saved in Recent under a name you choose. There's no central server handing out short numbers, which is the point.",
-          pt: "Um código de 52 caracteres. Ninguém digita: copia, cola, e ele fica salvo em Recentes com o nome que você escolher. Não tem servidor central distribuindo números curtos, e a ideia é essa.",
+          en: "A 52-character code you copy and paste, saved in Recent under a name you choose. There's no central server handing out short numbers, which is the point.",
+          pt: "Um código de 52 caracteres que você copia e cola, salvo em Recentes com o nome que você escolher. Não tem servidor central distribuindo números curtos, e a ideia é essa.",
         },
       },
       accept: {
