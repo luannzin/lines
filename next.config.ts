@@ -19,6 +19,19 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // A shared app runs in a frame of this page and may need the camera,
+        // the microphone or the location (the frame's `allow` passes them on).
+        source: "/:path*",
+        has: [{ type: "host", value: "hostline\\..*" }],
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(self), microphone=(self), geolocation=(self), browsing-topics=()",
+          },
+        ],
+      },
     ];
   },
   turbopack: {
