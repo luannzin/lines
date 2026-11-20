@@ -103,15 +103,15 @@ export default {
     you: { en: "You", pt: "Você" },
     helper: { en: "Whoever is helping you", pt: "Quem está te ajudando" },
     same: {
-      en: "Both windows are on this computer, so the link is as good as it gets. Across the internet it reaches less far and warms less.",
-      pt: "As duas janelas estão neste computador, então a ligação é a melhor possível. Pela internet ela vai menos longe e esquenta menos.",
+      en: "Both windows are on this computer, so the link meter is as full and warm as it gets. Across the internet its dots reach less far and stay cooler.",
+      pt: "As duas janelas estão neste computador, então o medidor da ligação fica o mais cheio e quente possível. Pela internet os pontos vão menos longe e ficam mais frios.",
     },
   },
   inside: {
     title: { en: "Once you're in", pt: "Depois de entrar" },
     lead: {
-      en: "It started as the smallest thing that could replace AnyDesk for helping family and friends. Then it needed the rest of what makes AnyDesk usable day to day.",
-      pt: "Começou como a menor coisa que desse pra trocar o AnyDesk na hora de ajudar família e amigos. Depois precisou do resto do que faz o AnyDesk ser usável no dia a dia.",
+      en: "I started it as the smallest thing that could replace AnyDesk when I help family and friends. Then it needed the rest of what makes AnyDesk usable day to day.",
+      pt: "Fiz ele pra ser a menor coisa que desse pra trocar o AnyDesk quando eu ajudo família e amigos. Depois ele precisou do resto do que faz o AnyDesk ser usável no dia a dia.",
     },
     rows: {
       control: {
@@ -146,7 +146,7 @@ export default {
         term: { en: "Games and video", pt: "Jogos e vídeo" },
         text: {
           en: "Native mode sends their screen at its own size, up to 4K, and its own refresh rate, up to 240 frames a second. When the link can't keep up, fewer frames come; the picture never gets smaller.",
-          pt: "O modo Nativo manda a tela da pessoa no tamanho dela, até 4K, e na taxa de atualização dela, até 240 quadros por segundo. Quando a ligação não aguenta, chegam menos quadros; a imagem nunca diminui.",
+          pt: "O modo Nativo manda a tela da pessoa no tamanho dela, até 4K, e na taxa de atualização dela, até 240 frames por segundo. Quando a ligação não aguenta, chegam menos frames; a imagem nunca diminui.",
         },
       },
       unattended: {
