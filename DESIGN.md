@@ -24,6 +24,10 @@ typography:
     fontFamily: "5x7 pixel face (SVG, one rect per font pixel)"
     fontSize: "42px"
     lineHeight: 1
+  name-wide:
+    fontFamily: "5x7 pixel face (SVG, one rect per font pixel)"
+    fontSize: "56px"
+    lineHeight: 1
   tagline:
     fontFamily: "Inter, sans-serif"
     fontSize: "1.125rem"
@@ -51,9 +55,9 @@ typography:
     lineHeight: 1.43
   code:
     fontFamily: "Geist Mono, monospace"
-    fontSize: "clamp(0.8125rem, 3.4vw, 1.125rem)"
+    fontSize: "clamp(0.875rem, 5.6cqi, 1.5rem)"
     fontWeight: 400
-    lineHeight: 1.625
+    lineHeight: 1.375
     letterSpacing: "-0.025em"
 rounded:
   md: "8px"
@@ -157,7 +161,7 @@ A neutral interface over a dusk art palette: the only hues on the page are drawn
 ### Neutral
 - **Ground** (ground): the page and the window copies.
 - **Soft Ink** (ink-soft, paper ink at 70%): body copy under a title, step lists, table answers, ghost buttons.
-- **Muted Ink** (ink-muted): notes, file descriptions, footer links at rest, window labels.
+- **Muted Ink** (ink-muted): file descriptions, footer links at rest, window labels. Not for instructions a visitor must follow (the first-run note under the download is Soft Ink).
 - **Hairline** (hairline, white at 6%): table row rules, the footer's top rule, window edges as an inset ring.
 - **Field Well** (field-well): the fill of inputs and outline buttons.
 - **Focus Ring** (focus-ring): every focus outline.
@@ -184,7 +188,7 @@ A neutral interface over a dusk art palette: the only hues on the page are drawn
 - **Body** (400, 16px): all reading text, in Paper Ink or Soft Ink; prose capped at `max-w-prose` (65ch).
 - **Control** (500, 14px from 640px, 16px below): coss button and input text.
 - **Mono** (400, 14px): file names, the round trip, a computer's short fingerprint, list markers.
-- **Code** (400, clamp 13px to 18px, -0.025em): a computer's full code, in three lines of grouped quads.
+- **Code** (400, 5.6% of its window's content width between 14px and 24px, -0.025em): a computer's full code, in three lines of grouped quads, as large as the three lines fit, up to Deskline's own 24px, so it can be read aloud over the phone.
 
 ### Named Rules
 **The One Size Rule.** Inter is 16px for everything you read. A heading gets weight 500 and full ink, never a larger size; the tagline is the single exception.
@@ -241,13 +245,13 @@ Inline links are Paper Ink with an underline at 25% ink, 3px offset, rising to 6
 The footer's language switch: each language named in its own language, Muted Ink at rest, Paper Ink for the current one (`aria-current`).
 
 ### Night Field (signature)
-A canvas behind the hero: 2px dots on a 3px grid (rounded to whole device pixels), dithered in five steps from night through the dusk toward the element marked as the glow (the mark), stretched 1.6x horizontally. Away from the glow, and under the element marked calm (the words), the field keeps to one dot in sixteen of violet, reaching full strength 160px outside the words' box so the calm has no edge. In the last 160px the night's own cells thin out in Bayer order onto the ground. The dots develop once, a front crossing left to right with each dot landing at its Bayer turn, over 1400ms with an exponential ease-out; under reduced motion the field is drawn at once.
+A canvas behind the hero: 2px dots on a 3px grid (rounded to whole device pixels), dithered in five steps from night through the dusk toward the element marked as the glow (the mark), stretched 1.6x horizontally. Under the element marked calm (the words) and 24px around it the field is plain night, so text and the download sit on nothing; from there it comes back over 176px, the glow in proportion and the night's one violet dot in sixteen thinning in at random, so the calm has no edge. Away from the glow the field keeps to that one dot in sixteen. In the last 160px the night's own cells thin out in Bayer order onto the ground. The dots develop once, a front crossing left to right with each dot landing at its Bayer turn, over 1400ms with an exponential ease-out; under reduced motion the field is drawn at once.
 
 ### Link Meter (signature)
 The link between two windows, drawn on the same dot grid. At rest, a band of violet every other dot joins the windows across the whole gap. Forming, a warming front sweeps left to right every 2400ms. Live, it reaches further, grows denser and warms toward gold with the link's quality, settling over 700ms, then stops repainting. Lost, sparse violet drifts. Under reduced motion each state is one still frame. With stats, the route and round trip show under it in Mono.
 
 ### Window Copy
-A copy of an app's own window, built in that app's system (for Deskline: the top bar with the mark and one underlined tab, the code, the prompt card, the red sharing bar, the session toolbar with its meter, the video on black). Ground fill, 14px corners, Window lift, a minimum 23rem tall, labelled above in Muted Ink with what it stands for. A prompt arrives over a 55% black dim, the card rising from 0.96 with a fade over 200ms; under reduced motion it only fades. Focus follows the question: to Accept when asked, to Stop sharing once answered, back to Copy code or the code field when it ends.
+A copy of an app's own window, built in that app's system (for Deskline: the top bar with the mark and one underlined tab, the code, the prompt card, the red sharing bar, the session toolbar with its meter, the video on black). Ground fill, 14px corners, Window lift, as tall as what it shows (a shared screen is 16:10, never letterboxed), labelled above in Muted Ink with what it stands for; side by side the two windows align at the top and the link's column stretches between them. A field paired with its button stays on one line while the field keeps 14rem, and the button drops below it otherwise; the field's hint is in Inter so it fits whole in either language. A prompt arrives over a 55% black dim, the card rising from 0.96 with a fade over 200ms; under reduced motion it only fades. Focus follows the question: to Accept when asked, to Stop sharing once answered, back to Copy code or the code field when it ends.
 
 ### Every File
 A table on hairline rules: the system and versions in weight 500 (with "yours" under the detected one), the exact file name as a Mono link, and how to run it in Muted Ink.

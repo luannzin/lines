@@ -115,7 +115,7 @@ export async function Line({
                       · {yours.label}
                     </p>
                     {yours.first && (
-                      <p className="max-w-md text-pretty text-muted-foreground">
+                      <p className="max-w-md text-pretty text-foreground/70">
                         {yours.first}
                       </p>
                     )}

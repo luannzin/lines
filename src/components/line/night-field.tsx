@@ -87,20 +87,29 @@ export function NightField() {
           );
           // the dusk thins toward the band, so the night ends before it does
           const fade = 1 - (y / bandTop) ** 3;
-          // how far outside the words' box this cell is: 0 under them, the
-          // glow back to full strength 160px out, so the calm has no edge
+          // how far outside the words' box this cell is: plain night under
+          // them and 24px around, the field back to full strength 200px out
           const out = calm
-            ? Math.hypot(
-                Math.max(calm.left - x, 0, x - calm.right),
-                Math.max(calm.top - y, 0, y - calm.bottom),
-              ) /
-              (160 * dpr)
+            ? Math.min(
+                1,
+                Math.max(
+                  0,
+                  Math.hypot(
+                    Math.max(calm.left - x, 0, x - calm.right),
+                    Math.max(calm.top - y, 0, y - calm.bottom),
+                  ) -
+                    24 * dpr,
+                ) /
+                  (176 * dpr),
+              )
             : 1;
-          // away from the glow, and under the words, one dot in sixteen: the
-          // night, not a wash
-          const glowT = Math.max(near ** 1.6 * fade, 0.03);
-          const t = 0.03 + (glowT - 0.03) * Math.min(1, out);
-          const i = dither(RAMP, t, c, r);
+          let i = dither(RAMP, near ** 1.6 * fade * out, c, r);
+          // away from the glow the night keeps one violet dot in sixteen,
+          // thinning out at random toward the words, so the calm has no edge
+          if (i === 0 && bayer(c, r) > 0.9) {
+            const hash = (((c * 73856093) ^ (r * 19349663)) >>> 0) % 1024;
+            if (hash / 1024 < out) i = 1;
+          }
           if (i === 0) continue;
           // the front crosses left to right; each dot lands at its Bayer turn
           const at = (x / canvas.width) * 0.6 + bayer(c, r) * 0.4;

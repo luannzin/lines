@@ -234,7 +234,7 @@ export function Demo({ locale }: { locale: Locale }) {
   };
 
   return (
-    <div className="grid items-center gap-y-4 lg:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1fr)]">
+    <div className="grid gap-y-8 lg:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1fr)]">
       <Frame label={labels.you}>
         <HostWindow
           d={d}
@@ -251,7 +251,7 @@ export function Demo({ locale }: { locale: Locale }) {
       </Frame>
       {/* the link spans the whole gap: on a phone, the space between the
           stacked windows; on a wide screen, the column between them */}
-      <div className="flex flex-col items-center gap-2 lg:pt-7">
+      <div className="relative flex flex-col justify-center lg:pt-9">
         <Dots
           link={link}
           label={
@@ -261,10 +261,12 @@ export function Demo({ locale }: { locale: Locale }) {
           }
           className="h-8 w-full"
         />
+        {/* hangs under the strip without taking room, so the strip stays
+            centred between the windows */}
         <p
           aria-hidden="true"
           className={cn(
-            "h-5 font-mono text-muted-foreground text-sm tabular-nums transition-opacity duration-300",
+            "absolute inset-x-0 top-[calc(50%+1.25rem)] text-center font-mono text-muted-foreground text-sm tabular-nums transition-opacity duration-300 lg:top-[calc(50%+1.25rem+1.125rem)]",
             !stats && "opacity-0",
           )}
         >
@@ -300,9 +302,14 @@ export function Demo({ locale }: { locale: Locale }) {
 /** A window with what it stands for written over it. */
 function Frame({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <section aria-label={label} className="flex min-w-0 flex-col gap-3">
+    // each window as tall as what it shows: a stretched one would letterbox
+    // its screen; the link's column between them stretches instead
+    <section
+      aria-label={label}
+      className="flex min-w-0 flex-col gap-3 self-start"
+    >
       <h3 className="text-muted-foreground">{label}</h3>
-      <div className="relative flex min-h-[23rem] flex-col overflow-hidden rounded-[14px] bg-background shadow-[inset_0_0_0_1px_var(--border),0_24px_48px_-24px_rgb(0_0_0/0.6)]">
+      <div className="relative flex flex-1 flex-col overflow-hidden rounded-[14px] bg-background shadow-[inset_0_0_0_1px_var(--border),0_24px_48px_-24px_rgb(0_0_0/0.6)]">
         {children}
       </div>
     </section>
@@ -417,7 +424,7 @@ function HostWindow({
           ref={screenBox}
           role="img"
           aria-label={d.yourScreen}
-          className="relative flex-1 cursor-none bg-black [&>canvas]:block [&>canvas]:size-full [&>canvas]:object-contain"
+          className="relative aspect-[16/10] flex-1 cursor-none bg-black [&>canvas]:block [&>canvas]:size-full [&>canvas]:object-contain"
           onPointerMove={(e) => desktop?.move("you", point(e))}
           onPointerLeave={() => desktop?.move("you", null)}
           onPointerDown={(e) => desktop?.click(point(e))}
@@ -428,10 +435,12 @@ function HostWindow({
   return (
     <>
       <TopBar />
-      <div className="flex flex-1 flex-col gap-1 px-4 pt-6 pb-5">
+      <div className="@container flex flex-1 flex-col gap-1 px-4 pt-6 pb-5">
         <h4 className="font-medium">{d.yourCode}</h4>
         <p className="text-foreground/70">{d.sendIt}</p>
-        <p className="mt-4 select-all font-mono text-[clamp(0.8125rem,3.4vw,1.125rem)] leading-relaxed tracking-tight">
+        {/* as large as three lines of it fit in the window, up to
+            Deskline's own 24px: read aloud over the phone */}
+        <p className="mt-4 select-all font-mono text-[clamp(0.875rem,5.6cqi,1.5rem)] leading-snug tracking-tight">
           {[lines.slice(0, 5), lines.slice(5, 10), lines.slice(10)].map(
             (row, i) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: three fixed lines
@@ -596,7 +605,7 @@ function ViewerWindow({
             {d.disconnect}
           </Button>
         </div>
-        <div className="relative flex-1 bg-black">
+        <div className="relative aspect-[16/10] flex-1 bg-black">
           <video
             ref={video}
             autoPlay
@@ -630,7 +639,7 @@ function ViewerWindow({
           {d.connectTo}
         </h4>
         <form
-          className="mt-1 flex gap-2"
+          className="mt-1 flex flex-wrap gap-2"
           onSubmit={(e) => {
             e.preventDefault();
             onConnect(text);
@@ -645,7 +654,9 @@ function ViewerWindow({
             autoComplete="off"
             spellCheck={false}
             onChange={(e) => setText(e.target.value)}
-            className="font-mono"
+            // the code in mono, the hint in the page's face: it fits whole
+            // in either language; the button drops below when it can't
+            className="min-w-56 flex-1 font-mono [&_input]:placeholder:font-sans"
           />
           <Button type="submit" disabled={busy}>
             {d.connect}
