@@ -36,6 +36,31 @@
   --color-tile: #1f1f1f;
   --color-sharing: #9b2c2c;
   --color-control: #5ac878;
+  /* Hostline's reconnecting dots: each there a quarter of the time and gone
+     the rest (a dot is drawn or not, never faded), staggered in Bayer order
+     (shell.tsx), so the lit quarter drifts. */
+  --animate-drift: drift 1.2s steps(1) infinite;
+  @keyframes drift {
+    0%,
+    24% {
+      opacity: 1;
+    }
+    25%,
+    100% {
+      opacity: 0;
+    }
+  }
+  /* Hostline's globe turning: a strip of 16 frames, 90ms each, stepped with
+     no easing (jump-none lands on the first and the last frame). */
+  --animate-turn: turn 1440ms steps(16, jump-none) infinite;
+  @keyframes turn {
+    from {
+      background-position: 0% 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  }
 }
 
 /* luannzin.com's dark tokens (its DESIGN.md): a neutral near-black ground,

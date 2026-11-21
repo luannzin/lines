@@ -63,6 +63,7 @@ rounded:
   md: "8px"
   lg: "10px"
   window: "14px"
+  full: "9999px"
 spacing:
   "2": "8px"
   "3": "12px"
@@ -120,6 +121,19 @@ components:
     backgroundColor: "{colors.sharing-red}"
     textColor: "{colors.on-red}"
     padding: "8px 16px"
+  live-status:
+    backgroundColor: "{colors.ground}"
+    textColor: "{colors.paper-ink}"
+    typography: "{typography.control}"
+    rounded: "{rounded.full}"
+    padding: "0 12px"
+    height: "32px"
+  live-status-folded:
+    backgroundColor: "{colors.ground}"
+    rounded: "{rounded.full}"
+    padding: "0 12px"
+    height: "32px"
+    width: "32px"
 ---
 
 # Design System: The lines
@@ -184,7 +198,7 @@ A neutral interface over a dusk art palette: the only hues on the page are drawn
 ### Hierarchy
 - **Name** (pixel face, 42px, 56px from 640px): the line's name in the hero, with the text name in `sr-only` beside it. Sizes are multiples of 7 so each font pixel stays a whole pixel.
 - **Tagline** (500, 18px, 20px from 640px): the line's one line under the name. The only Inter text above body size.
-- **Title** (500, 16px): every heading (section titles, window heads, table heads, list terms).
+- **Title** (500, 16px): every heading (section titles, window heads, table heads, list terms, the Hostline shell's state).
 - **Body** (400, 16px): all reading text, in Paper Ink or Soft Ink; prose capped at `max-w-prose` (65ch).
 - **Control** (500, 14px from 640px, 16px below): coss button and input text.
 - **Mono** (400, 14px): file names, the round trip, a computer's short fingerprint, list markers.
@@ -205,21 +219,24 @@ Below the field, the line's sections (`Part`) stack with 112px between them (144
 
 Rhythm inside a block: 4 to 12px between a title and its text, 24 to 40px between groups.
 
+Hostline's shell has no ground: the night covers the whole screen to its bottom edge, and the globe and the words centre in it with 24px side padding. On phones the globe (96px, 3x) sits centred with the words centred 96px under it, far enough that the glow ends round before them. From 1024px it takes the README banner's composition: the words left-aligned on the left, the globe at 256px (8x) on the right, 160px apart. The words cap at 28rem. Over a shared app, the live status sits bottom right, max(12px, safe area) from the edges.
+
 ## Elevation & Depth
 
 Flat. Depth on the ground comes from tone and 1px inset hairline rings, never from shadow. The field gives the hero its depth through the glow's dot density.
 
 ### Shadow Vocabulary
 - **Window lift** (`box-shadow: inset 0 0 0 1px var(--border), 0 24px 48px -24px rgb(0 0 0 / 0.6)`): only on a copy of an app's window standing in the field, so it reads as a window on a desktop.
+- **Status lift** (`box-shadow: inset 0 0 0 1px var(--border), 0 8px 24px -8px rgb(0 0 0 / 0.6)`): only on Hostline's live status, which floats over a shared app whose content can be anything.
 - **Prompt edge** (`box-shadow: inset 0 0 0 1px var(--border)`): the prompt card over its 55% black dim.
 - **Paper button** (coss default): a 1px white-16% top inset and a faint primary shadow at rest, removed on press.
 
 ### Named Rules
-**The Inset Edge Rule.** Containers on the ground are edged by a 1px inset ring or a hairline rule. An outer shadow belongs only to an app window shown floating in the field.
+**The Inset Edge Rule.** Containers on the ground are edged by a 1px inset ring or a hairline rule. An outer shadow belongs only to what floats over something that isn't the ground: an app window shown in the field (Window lift) and Hostline's live status over a shared app (Status lift).
 
 ## Shapes
 
-Gently rounded controls (10px for buttons and inputs, 8px for the smallest buttons). Window copies and their prompt cards take 14px, Deskline's window radius. Everything in the art is square: dots, pixel type and marks have no rounding and no anti-aliasing. Tables and lists are open, ruled by hairlines only.
+Gently rounded controls (10px for buttons and inputs, 8px for the smallest buttons). Window copies and their prompt cards take 14px, Deskline's window radius. Hostline's live status is the one fully rounded shape: a pill, and a 32px circle when folded. Everything in the art is square: dots, pixel type and marks have no rounding and no anti-aliasing. Tables and lists are open, ruled by hairlines only.
 
 ## Components
 
@@ -247,6 +264,8 @@ The footer's language switch: each language named in its own language, Muted Ink
 ### Night Field (signature)
 A canvas behind the hero: 2px dots on a 3px grid (rounded to whole device pixels), dithered in five steps from night through the dusk toward the element marked as the glow (the mark), stretched 1.6x horizontally. Under the element marked calm (the words) and 24px around it the field is plain night, so text and the download sit on nothing; from there it comes back over 176px, the glow in proportion and the night's one violet dot in sixteen thinning in at random, so the calm has no edge. Away from the glow the field keeps to that one dot in sixteen. In the last 160px the night's own cells thin out in Bayer order onto the ground. The dots develop once, a front crossing left to right with each dot landing at its Bayer turn, over 1400ms with an exponential ease-out; under reduced motion the field is drawn at once.
 
+It comes in two variants. The hero's is the default: a 160px band dithering onto the ground below, plain night under the words. Hostline's shell fills a whole screen with nothing below, so it has no band (the night runs to the screen's edge), and the night's sparse violet dots run on under the words, only the glow fading from the words' box over 240px: on a full screen an empty box around the words read as a plate.
+
 ### Link Meter (signature)
 The link between two windows, drawn on the same dot grid. At rest, a band of violet every other dot joins the windows across the whole gap. Forming, a warming front sweeps left to right every 2400ms. Live, it reaches further, grows denser and warms toward gold with the link's quality, settling over 700ms, then stops repainting. Lost, sparse violet drifts. Under reduced motion each state is one still frame. With stats, the route and round trip show under it in Mono.
 
@@ -256,15 +275,25 @@ A copy of an app's own window, built in that app's system (for Deskline: the top
 ### Every File
 A table on hairline rules: the system and versions in weight 500 (with "yours" under the detected one), the exact file name as a Mono link, and how to run it in Muted Ink.
 
+### Hostline Shell (signature)
+Every moment of a Hostline link that isn't the shared app: opening, the beat between the line coming up and the app's first page, waiting, ended, unsupported. The full-screen Night Field with Hostline's globe as the glow's subject and the words in its calm: the state as a Title in Paper Ink, one line under it in Soft Ink, in a polite live region. No button, no spinner, no card.
+
+The globe is the state. It is the line's 32x32 mark, a wireframe globe drawn in the dusk by height (violet high, gold low), turning through a strip of 16 frames, 90ms each (1440ms), stepped with no easing like the apps' pixel art, and still under reduced motion. Dusk while the link opens; gold once the line is up, held gold at least 450ms so the turn is seen; still and dim when nobody answers, the link ended or the browser can't open it. Its other strips are preloaded so a change never shows a gap.
+
+When the app's first page is in, the night fades out over 300ms ease-out (at once under reduced motion) and goes inert; the app's frame under it stays inert while the night covers it. When the link ends, the night comes back.
+
+### Live Status (Hostline)
+The only control over a shared app: a Ground pill, 32px tall, Status lift, the word in Control type and Paper Ink after a 3x3 cluster of 2px dots on the field's 3px grid. Live: all nine, gold with ember in Bayer order. Reconnecting: a quarter in ember, the lit quarter drifting in Bayer order (1.2s, stepped), the rest not drawn (a dot is there or not, never faded); still under reduced motion. A click folds it to the dots (a 32px circle, `aria-expanded`, the word as its title when folded) and back, the word's column opening and closing over 200ms on `cubic-bezier(0.23, 1, 0.32, 1)`, at once under reduced motion. Its hit area grows to 44px. Bottom right, because Next.js's dev indicator holds bottom left in shared dev apps.
+
 ## Do's and Don'ts
 
 ### Do:
 - **Do** build a new line from `Line` and `Part`, bringing only its words, its 32x32 mark and its live piece.
 - **Do** draw every passage of the art in 2px dots on the 3px grid, in the 4x4 Bayer order, from the night and the four dusk colours only.
-- **Do** end the night in a dither onto the ground.
+- **Do** end the night in a dither onto the ground wherever there is ground below it; a full-screen night runs to the screen's edge.
 - **Do** set the line's name in the pixel face at a multiple of 7px, with the text name available to screen readers.
 - **Do** keep one paper-ink button per group, and put the detected system's file first, with its exact file name and what the system says the first time.
-- **Do** give every motion a reduced-motion state that still shows the result: field drawn at once, link strips still, prompts fading without scale.
+- **Do** give every motion a reduced-motion state that still shows the result: field drawn at once, link strips still, prompts fading without scale, Hostline's globe and status dots still.
 - **Do** keep every string in English and Brazilian Portuguese.
 
 ### Don't:

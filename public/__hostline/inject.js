@@ -1,6 +1,7 @@
 // Runs first in every page of an app shared through Hostline, inside the frame the link's page
-// opens. Two jobs: carry the app's WebSockets (hot reload, live data) over the line to the host's
-// machine, and keep the address bar on the app's path. The service worker adds this script.
+// opens. Its jobs: carry the app's WebSockets (hot reload, live data) over the line to the host's
+// machine, keep the address bar on the app's path, and say when the page is in, so the link's
+// page shows it. The service worker adds this script.
 (() => {
   const line = window.parent !== window && window.parent.__hostline;
   if (!line) return;
@@ -104,4 +105,5 @@
   }
   addEventListener("popstate", report);
   report();
+  addEventListener("DOMContentLoaded", () => line.ready());
 })();

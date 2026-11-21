@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-20T00:00:00Z",
+  "generatedAt": "2026-11-21T00:00:00Z",
   "title": "Design System: The lines",
   "extensions": {
     "colorMeta": {
@@ -33,18 +33,24 @@
     },
     "shadows": [
       { "name": "window-lift", "value": "inset 0 0 0 1px var(--border), 0 24px 48px -24px rgb(0 0 0 / 0.6)", "purpose": "Only on a copy of an app's window standing in the night field." },
+      { "name": "status-lift", "value": "inset 0 0 0 1px var(--border), 0 8px 24px -8px rgb(0 0 0 / 0.6)", "purpose": "Only on Hostline's live status, floating over a shared app whose content can be anything." },
       { "name": "prompt-edge", "value": "inset 0 0 0 1px var(--border)", "purpose": "The prompt card over its 55% black dim; containers on the ground." },
       { "name": "paper-button", "value": "inset 0 1px rgb(255 255 255 / 0.16), 0 1px 2px rgb(245 245 245 / 0.24)", "purpose": "coss primary button at rest; removed on press and when disabled." }
     ],
     "motion": [
-      { "name": "ease-out-strong", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Button press and prompt arrival." },
+      { "name": "ease-out-strong", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Button press, prompt arrival, the live status folding." },
       { "name": "press", "value": "scale 0.96, 150ms ease-out-strong", "purpose": "A pressed button dips; off under reduced motion." },
       { "name": "appear", "value": "opacity 0 and scale 0.96 to 1, 200ms ease-out-strong (@starting-style)", "purpose": "A prompt arriving; fade only under reduced motion." },
       { "name": "field-develop", "value": "1400ms, exponential ease-out (1 - 2^(-10k)), left-to-right front with Bayer-order landing", "purpose": "The night field develops once; drawn at once under reduced motion." },
       { "name": "link-forming", "value": "2400ms sweep cycle, repaint every 50ms", "purpose": "The link meter while a connection forms." },
       { "name": "link-settle", "value": "700ms front, then still", "purpose": "A live link filling in to its quality." },
       { "name": "link-lost", "value": "drift one column every 120ms", "purpose": "Sparse violet while the link is lost." },
-      { "name": "stats-fade", "value": "opacity 300ms", "purpose": "The route and round trip appearing under the link." }
+      { "name": "stats-fade", "value": "opacity 300ms", "purpose": "The route and round trip appearing under the link." },
+      { "name": "globe-turn", "value": "1440ms steps(16, jump-none) infinite (animate-turn), 16-frame strip", "purpose": "Hostline's globe turning; still under reduced motion." },
+      { "name": "globe-lit-hold", "value": "450ms minimum", "purpose": "The gold globe stays at least this long before the shared app shows." },
+      { "name": "shell-fade", "value": "opacity 300ms ease-out", "purpose": "Hostline's night giving way to the shared app; none under reduced motion." },
+      { "name": "status-drift", "value": "1.2s steps(1) infinite (animate-drift), staggered by Bayer threshold", "purpose": "The live status's lit quarter drifting while reconnecting; still under reduced motion." },
+      { "name": "status-fold", "value": "grid-template-columns and margin-left, 200ms ease-out-strong", "purpose": "The live status folding to its dots and back; none under reduced motion." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -128,6 +134,14 @@
       "description": "The band joining two windows before they connect: 2px violet dots on the 3px grid, half of them lit (the real meter is canvas-drawn in Bayer order; this approximates it with every other column).",
       "html": "<div class=\"ds-link-rest\" aria-hidden=\"true\"></div>",
       "css": ".ds-link-rest { width: 144px; height: 32px; background: linear-gradient(90deg, #3a2a6b 2px, transparent 2px) 0 0 / 6px 3px repeat; -webkit-mask: linear-gradient(#000 2px, transparent 2px) 0 0 / 3px 3px repeat; mask: linear-gradient(#000 2px, transparent 2px) 0 0 / 3px 3px repeat; }"
+    },
+    {
+      "name": "Live Status",
+      "kind": "custom",
+      "refersTo": "live-status",
+      "description": "Hostline's one control over a shared app, live: nine 2px dots on the 3px grid, gold with ember in Bayer order, and the word. Folds to the dots on click.",
+      "html": "<button class=\"ds-status\" aria-expanded=\"true\"><svg viewBox=\"0 0 8 8\" shape-rendering=\"crispEdges\" aria-hidden=\"true\"><rect x=\"0\" y=\"0\" width=\"2\" height=\"2\" fill=\"#ffd180\"/><rect x=\"3\" y=\"0\" width=\"2\" height=\"2\" fill=\"#ffd180\"/><rect x=\"6\" y=\"0\" width=\"2\" height=\"2\" fill=\"#ffd180\"/><rect x=\"0\" y=\"3\" width=\"2\" height=\"2\" fill=\"#e0703f\"/><rect x=\"3\" y=\"3\" width=\"2\" height=\"2\" fill=\"#ffd180\"/><rect x=\"6\" y=\"3\" width=\"2\" height=\"2\" fill=\"#e0703f\"/><rect x=\"0\" y=\"6\" width=\"2\" height=\"2\" fill=\"#ffd180\"/><rect x=\"3\" y=\"6\" width=\"2\" height=\"2\" fill=\"#e0703f\"/><rect x=\"6\" y=\"6\" width=\"2\" height=\"2\" fill=\"#ffd180\"/></svg><span>Live</span></button>",
+      "css": ".ds-status { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border: 0; border-radius: 9999px; background: #161616; color: #f5f5f5; font: 500 14px/1 Inter, sans-serif; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06), 0 8px 24px -8px rgb(0 0 0 / 0.6); cursor: pointer; } .ds-status::after { content: ''; position: absolute; inset: -6px; } .ds-status svg { width: 8px; height: 8px; flex-shrink: 0; } .ds-status:focus-visible { outline: 2px solid #737373; outline-offset: 2px; }"
     }
   ],
   "narrative": {
@@ -147,15 +161,15 @@
       { "name": "The One Meaning Rule", "body": "Inside a window copy, red means someone is in and green means you have control. Neither is used for anything else, on the window or off it.", "section": "colors" },
       { "name": "The One Size Rule", "body": "Inter is 16px for everything you read. A heading gets weight 500 and full ink, never a larger size; the tagline is the single exception.", "section": "typography" },
       { "name": "The Whole Pixel Rule", "body": "Pixel type and pixel marks scale only by whole multiples: the name in multiples of 7px, the 32x32 mark at 1x, 3x and 8x, always with `image-rendering: pixelated` and crisp edges.", "section": "typography" },
-      { "name": "The Inset Edge Rule", "body": "Containers on the ground are edged by a 1px inset ring or a hairline rule. An outer shadow belongs only to an app window shown floating in the field.", "section": "elevation" }
+      { "name": "The Inset Edge Rule", "body": "Containers on the ground are edged by a 1px inset ring or a hairline rule. An outer shadow belongs only to what floats over something that isn't the ground: an app window shown in the field (Window lift) and Hostline's live status over a shared app (Status lift).", "section": "elevation" }
     ],
     "dos": [
       "**Do** build a new line from `Line` and `Part`, bringing only its words, its 32x32 mark and its live piece.",
       "**Do** draw every passage of the art in 2px dots on the 3px grid, in the 4x4 Bayer order, from the night and the four dusk colours only.",
-      "**Do** end the night in a dither onto the ground.",
+      "**Do** end the night in a dither onto the ground wherever there is ground below it; a full-screen night runs to the screen's edge.",
       "**Do** set the line's name in the pixel face at a multiple of 7px, with the text name available to screen readers.",
       "**Do** keep one paper-ink button per group, and put the detected system's file first, with its exact file name and what the system says the first time.",
-      "**Do** give every motion a reduced-motion state that still shows the result: field drawn at once, link strips still, prompts fading without scale.",
+      "**Do** give every motion a reduced-motion state that still shows the result: field drawn at once, link strips still, prompts fading without scale, Hostline's globe and status dots still.",
       "**Do** keep every string in English and Brazilian Portuguese."
     ],
     "donts": [

@@ -4,7 +4,7 @@
 
 export type Link = { secret: string; host: string };
 
-const LINK = /^#([0-9A-Za-z]{22})~([0-9a-f]{22})$/;
+export const LINK = /^#([0-9A-Za-z]{22})~([0-9a-f]{22})$/;
 
 export function parseLink(hash: string): Link | null {
   const m = LINK.exec(hash);

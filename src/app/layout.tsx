@@ -11,9 +11,11 @@ const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await setLocale();
   return (
+    // Hostline's page marks <html> with data-link before React loads (src/app/hostline/page.tsx)
     <html
       lang={locale}
       className={`dark h-full font-sans antialiased ${inter.variable} ${mono.variable}`}
+      suppressHydrationWarning
     >
       <body className="relative flex min-h-full flex-col">{children}</body>
     </html>

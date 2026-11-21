@@ -5,18 +5,30 @@ import { bayer, DUSK, dither, grid, NIGHT } from "@/lib/dusk";
 
 // The banner's field, live: 2px dots on a 3px grid, dithered from the night
 // toward the dusk glow around the element marked `data-glow` in the same
-// section (the line's mark). Under the element marked `data-calm` (the words)
-// the dots keep to the night's floor, so the text reads over them. The night
-// itself ends in a dither too: across the section's last BAND pixels its
-// cells thin out in Bayer order onto the ground below. The dots develop
-// once, settling in Bayer order behind a front; under reduced motion they
-// are simply there.
+// section (the line's mark). The element marked `data-calm` (the words) keeps
+// the glow off itself so the text reads: with `under` "night" (the hero) it
+// sits on plain night 24px around, the field back to full strength 176px
+// further out; with "dots" (Hostline's shell, words alone on a whole screen,
+// where an empty box around them reads as a plate) the night's sparse violet
+// dots run under it and only the glow fades, from its box out over 240px.
+// The night itself ends in a dither too: across the section's last `band`
+// pixels its cells thin out in Bayer order onto the ground below (line.tsx
+// leaves that much of the section unfilled, bottom-40; the shell has nothing
+// below, so its night runs to the edge with no band). The dots develop once,
+// settling in Bayer order behind a front; under reduced motion they are
+// simply there.
 
 const RAMP = 5; // night, then the four dusk colours
 const DEVELOP = 1400; // ms
-const BAND = 160; // css px; line.tsx leaves this much of the section unfilled (bottom-40)
 
-export function NightField() {
+export function NightField({
+  band: bandCss = 160,
+  under = "night",
+}: {
+  band?: number;
+  under?: "night" | "dots";
+}) {
+  const [clear, fade] = under === "night" ? [24, 176] : [0, 240];
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -43,7 +55,7 @@ export function NightField() {
       const g = grid(dpr);
       dot = g.dot;
       step = g.step;
-      const band = BAND * dpr;
+      const band = bandCss * dpr;
       const bandTop = canvas.height - band;
       // the words' box, in device pixels
       const calmEl = section
@@ -76,7 +88,9 @@ export function NightField() {
         for (let r = 0; r < rows; r++) {
           const x = c * g.step;
           const y = r * g.step;
-          if (y >= bandTop) {
+          // a row straddling the band's top is band too, or the ground shows through the gap
+          // between the night's edge and the first full row
+          if (y + g.step > bandTop) {
             // full cells of night, fewer the lower they sit
             if (bayer(c, r) < 1 - (y - bandTop) / band) seam.push({ x, y });
             continue;
@@ -86,9 +100,10 @@ export function NightField() {
             1 - Math.hypot(x - gx, (y - gy) * 1.6) / reach,
           );
           // the dusk thins toward the band, so the night ends before it does
-          const fade = 1 - (y / bandTop) ** 3;
+          const thin = 1 - (y / bandTop) ** 3;
           // how far outside the words' box this cell is: plain night under
-          // them and 24px around, the field back to full strength 200px out
+          // them and `clear` px around, the field back to full strength
+          // `fade` px further out
           const out = calm
             ? Math.min(
                 1,
@@ -98,17 +113,18 @@ export function NightField() {
                     Math.max(calm.left - x, 0, x - calm.right),
                     Math.max(calm.top - y, 0, y - calm.bottom),
                   ) -
-                    24 * dpr,
+                    clear * dpr,
                 ) /
-                  (176 * dpr),
+                  (fade * dpr),
               )
             : 1;
-          let i = dither(RAMP, near ** 1.6 * fade * out, c, r);
+          let i = dither(RAMP, near ** 1.6 * thin * out, c, r);
           // away from the glow the night keeps one violet dot in sixteen,
           // thinning out at random toward the words, so the calm has no edge
+          // (or, under "dots", running on under them)
           if (i === 0 && bayer(c, r) > 0.9) {
             const hash = (((c * 73856093) ^ (r * 19349663)) >>> 0) % 1024;
-            if (hash / 1024 < out) i = 1;
+            if (under === "dots" || hash / 1024 < out) i = 1;
           }
           if (i === 0) continue;
           // the front crosses left to right; each dot lands at its Bayer turn
@@ -150,7 +166,7 @@ export function NightField() {
       resize.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [bandCss, clear, fade, under]);
 
   return (
     // biome-ignore lint/a11y/noAriaHiddenOnFocusable: a canvas isn't focusable; this one is art

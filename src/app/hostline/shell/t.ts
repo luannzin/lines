@@ -1,5 +1,5 @@
 // What a visitor reads around a shared app: while the link opens, while it waits for the host,
-// and in the pill over the app.
+// when it ends, and in the control over the app.
 export default {
   opening: { en: "Opening the link", pt: "Abrindo o link" },
   notice: {
@@ -20,10 +20,13 @@ export default {
     pt: "Quem compartilhou parou o Hostline. Pede um link novo pra pessoa.",
   },
   unsupported: {
-    en: "This browser can't open Hostline links. A private window may be the reason: try a normal one, in Chrome, Edge, Firefox or Safari.",
-    pt: "Esse navegador não abre links do Hostline. Pode ser a janela anônima: tenta numa normal, no Chrome, Edge, Firefox ou Safari.",
+    en: "This browser can't open Hostline links",
+    pt: "Esse navegador não abre links do Hostline",
+  },
+  unsupportedText: {
+    en: "A private window may be the reason. Try a normal one, in Chrome, Edge, Firefox or Safari.",
+    pt: "Pode ser a janela anônima. Tenta numa normal, no Chrome, Edge, Firefox ou Safari.",
   },
   live: { en: "Live", pt: "Ao vivo" },
   reconnecting: { en: "Reconnecting", pt: "Reconectando" },
-  ends: { en: "Ends", pt: "Acaba" },
 };

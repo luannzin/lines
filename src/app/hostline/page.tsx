@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, setLocale, t } from "@/i18n/generated";
+import { LINK } from "./shell/link";
 import { Shell } from "./shell/shell";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,7 +29,15 @@ export default async function Hostline() {
   const p = t.app.hostline;
   return (
     <>
-      <main className="mx-auto w-full max-w-5xl px-6 py-24">
+      {/* Runs as the page parses: with a link in the address, the page about Hostline never
+          shows, not even before the shell starts */}
+      <script
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: a constant, no input in it
+        dangerouslySetInnerHTML={{
+          __html: `if(/${LINK.source}/.test(location.hash))document.documentElement.dataset.link=""`,
+        }}
+      />
+      <main className="mx-auto w-full max-w-5xl px-6 py-24 [html[data-link]_&]:hidden">
         <h1 className="font-medium">Hostline</h1>
         <p className="mt-2 text-foreground/70">{p.hero.line}</p>
       </main>

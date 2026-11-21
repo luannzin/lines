@@ -34,10 +34,10 @@ Root owns repo-wide config and the folders without their own AGENTS.md:
 - `src/proxy.ts`: maps the request's host to its line (`deskline.*` serves `/deskline`); paths with a dot and `/_next/` pass through, so `/deskline/mark.png` works on every host. On `hostline.*` every path, dots included, serves `/hostline` (the path is the shared app's), except `/_next/`, `/hostline-sw.js` and `/__hostline/`
 - `public/hostline-sw.js`, `public/__hostline/inject.js`: Hostline's service worker and the script it puts in every shared page; plain JavaScript, owned by `src/app/hostline/AGENTS.md`
 - `src/lib/lines.ts`: the lines with a page, and each one's origin; `src/lib/dusk.ts`: the shared palette, Bayer matrix and dot grid; `src/lib/locale.ts`: the Server Action that switches language
-- `src/components/line/`: the shared landing template (`line.tsx`: the night field hero with the download for the visitor's system, the live piece, the line's sections, every file, the footer), `night-field.tsx`, `pixel-name.tsx` (the 5x7 face from the apps' `tools/logo.py`), `t.ts`
+- `src/components/line/`: the shared landing template (`line.tsx`: the night field hero with the download for the visitor's system, the live piece, the line's sections, every file, the footer), `night-field.tsx` (its `band` and `under` props let a field fill a whole screen with nothing below it, as Hostline's shell does; the hero uses the defaults), `pixel-name.tsx` (the 5x7 face from the apps' `tools/logo.py`), `t.ts`
 - `src/components/ui/`: the coss UI parts in use (button, spinner, input, checkbox), added with `bunx --bun shadcn@latest add @coss/<name>`; add a part only when a page uses it
 - `src/app/<line>/`: one folder per line: `page.tsx` (its words, files and sections through `Line`), `t.ts`, `layout.tsx` (its `metadataBase`), `icon.png` and `opengraph-image.png` (copied from the line's repo, drawn by its `tools/logo.py`), and its live piece
-- `public/<line>/`: art the pages load by path (`mark.png`, the 32x32 mark)
+- `public/<line>/`: art the pages load by path (`mark.png`, the 32x32 mark; Hostline adds `mark-out.png` and the turning strips `mark-spin.png` and `mark-spin-lit.png`)
 - `.impeccable/`: impeccable skill state (surface briefs with the direction contract, `design.json`)
 
 ## Local Contracts
