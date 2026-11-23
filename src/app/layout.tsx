@@ -1,5 +1,6 @@
 import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@/components/analytics";
 import { setLocale } from "@/i18n/generated";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -17,7 +18,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark h-full font-sans antialiased ${inter.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
-      <body className="relative flex min-h-full flex-col">{children}</body>
+      <body className="relative flex min-h-full flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

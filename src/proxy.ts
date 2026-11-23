@@ -20,15 +20,16 @@ export function proxy(request: NextRequest) {
   return NextResponse.rewrite(url);
 }
 
-// Pages only: Next's own files and anything with an extension (icons,
-// images, fonts) are served as they are. On Hostline's subdomain a shared
-// app's paths can have extensions too (/about.html), so there only Next's
-// files, the service worker and the frame's helper pass.
+// Pages only: Next's own files, Vercel's (/_vercel: the page view counter)
+// and anything with an extension (icons, images, fonts) are served as they
+// are. On Hostline's subdomain a shared app's paths can have extensions too
+// (/about.html), so there only Next's and Vercel's files, the service worker
+// and the frame's helper pass.
 export const config = {
   matcher: [
-    "/((?!_next/|.*\\..*).*)",
+    "/((?!_next/|_vercel/|.*\\..*).*)",
     {
-      source: "/((?!_next/|hostline-sw\\.js|__hostline/).*\\..*)",
+      source: "/((?!_next/|_vercel/|hostline-sw\\.js|__hostline/).*\\..*)",
       has: [{ type: "host", value: "hostline\\..*" }],
     },
   ],

@@ -33,7 +33,7 @@ Each page runs a piece of the real thing instead of describing it: Deskline's pa
 
 - Every string in English and Brazilian Portuguese; the language follows the visitor (cookie, then Accept-Language) and can be switched.
 - Builds are unsigned: Windows SmartScreen needs "More info, Run anyway" and macOS "Open Anyway" the first time. Pages say so next to the download.
-- No analytics events, accounts, forms or server state.
+- Page views only, through Vercel Web Analytics: no custom events, nothing after a `#`, and a Hostline link's page isn't counted. No accounts, forms or server state.
 
 ## Brand Commitments
 
