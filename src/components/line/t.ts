@@ -5,6 +5,8 @@ export default {
     pt: "Baixar pra {system}",
   },
   otherSystems: { en: "Other systems", pt: "Outros sistemas" },
+  copy: { en: "Copy", pt: "Copiar" },
+  copied: { en: "Copied", pt: "Copiado" },
   files: {
     title: { en: "Every file", pt: "Todos os arquivos" },
     system: { en: "System", pt: "Sistema" },

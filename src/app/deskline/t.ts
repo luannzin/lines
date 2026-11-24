@@ -46,8 +46,8 @@ export default {
     windows: {
       system: { en: "Windows 10 and 11", pt: "Windows 10 e 11" },
       how: {
-        en: "One file. Run it as is, or click Install Deskline on this computer to install it for everyone, with its service.",
-        pt: "Um arquivo só. Roda ele direto, ou clica em Instalar o Deskline neste computador pra instalar pra todo mundo, com o serviço.",
+        en: "One file. Run it as is, or install it for everyone, with its service, from Settings, Install for all users.",
+        pt: "Um arquivo só. Roda ele direto, ou instala pra todo mundo, com o serviço, em Configurações, Instalar para todos os usuários.",
       },
       first: {
         en: "The first time, Windows SmartScreen stops it: click More info, then Run anyway. The build isn't signed with a paid certificate yet.",
@@ -74,12 +74,16 @@ export default {
     dmg: {
       system: { en: "macOS 11+", pt: "macOS 11+" },
       how: {
-        en: "Drag Deskline into Applications. Allow Screen Recording and Accessibility when it asks.",
-        pt: "Arrasta o Deskline pra Aplicativos. Permite Gravação de Tela e Acessibilidade quando ele pedir.",
+        en: "Drag Deskline into Applications. Its home asks for Screen Recording and Accessibility: allow both.",
+        pt: "Arrasta o Deskline pra Aplicativos. O início dele pede Gravação de Tela e Acessibilidade: permite as duas.",
       },
       first: {
-        en: "The first time, macOS won't open it: go to System Settings, Privacy & Security, and click Open Anyway. The build isn't signed with a paid certificate yet.",
-        pt: "Na primeira vez o macOS não abre: vai em Ajustes do Sistema, Privacidade e Segurança, e clica em Abrir Mesmo Assim. O Deskline ainda não é assinado com um certificado pago.",
+        en: "The first time, macOS won't open it: try once, then go to System Settings, Privacy & Security, click Open Anyway and type your password. The build isn't signed with a paid certificate yet.",
+        pt: "Na primeira vez o macOS não abre: tenta uma vez, depois vai em Ajustes do Sistema, Privacidade e Segurança, clica em Abrir Mesmo Assim e digita sua senha. O Deskline ainda não é assinado com um certificado pago.",
+      },
+      line: {
+        en: "Or paste this in Terminal, and macOS opens Deskline straight away, with no Open Anyway.",
+        pt: "Ou cola isto no Terminal, e o macOS abre o Deskline direto, sem Abrir Mesmo Assim.",
       },
     },
     zip: {
@@ -105,6 +109,35 @@ export default {
     same: {
       en: "Both windows are on this computer, so the link meter is as full and warm as it gets. Across the internet its dots reach less far and stay cooler.",
       pt: "As duas janelas estão neste computador, então o medidor da ligação fica o mais cheio e quente possível. Pela internet os pontos vão menos longe e ficam mais frios.",
+    },
+  },
+  first: {
+    title: { en: "The first time", pt: "A primeira vez" },
+    lead: {
+      en: "What each system asks before Deskline can share a screen, so you can talk someone through it over the phone.",
+      pt: "O que cada sistema pede antes do Deskline compartilhar uma tela, pra você conseguir explicar pra alguém pelo telefone.",
+    },
+    windows: {
+      en: "SmartScreen stops a file it doesn't know yet: More info, then Run anyway. Then Copy code and send it. There's nothing else to allow.",
+      pt: "O SmartScreen barra um arquivo que ainda não conhece: Mais informações e depois Executar assim mesmo. Aí é Copiar código e mandar. Não tem mais nada pra permitir.",
+    },
+    mac: {
+      install: {
+        en: "Open Terminal (Command+Space, type Terminal, Enter) and paste this line. Deskline opens straight away, with no Open Anyway.",
+        pt: "Abre o Terminal (Command+Espaço, digita Terminal, Enter) e cola esta linha. O Deskline abre direto, sem Abrir Mesmo Assim.",
+      },
+      allow: {
+        en: "Deskline's home lists two things to allow: Screen Recording, so the other person sees the screen, and Accessibility, so they can use the mouse and keyboard. Click Allow on each and switch Deskline on in the list that opens.",
+        pt: "O início do Deskline mostra duas coisas pra permitir: Gravação de Tela, pra outra pessoa ver a tela, e Acessibilidade, pra ela usar o mouse e o teclado. Clica em Permitir em cada uma e liga o Deskline na lista que abrir.",
+      },
+      restart: {
+        en: "If Screen Recording still says it isn't allowed, click Restart Deskline: macOS shows a running app the change only once it restarts.",
+        pt: "Se a Gravação de Tela continuar como não permitida, clica em Reiniciar o Deskline: o macOS só mostra a mudança pra um app aberto depois que ele reinicia.",
+      },
+    },
+    linux: {
+      en: "Install the .deb and open Deskline. The first time someone connects, your system's sharing dialog asks which screens they see and whether they may control. Choose screens, on the red bar, asks again.",
+      pt: "Instala o .deb e abre o Deskline. Na primeira vez que alguém conecta, o diálogo de compartilhamento do sistema pergunta quais telas a pessoa vê e se ela pode controlar. Escolher telas, na barra vermelha, pergunta de novo.",
     },
   },
   inside: {
@@ -193,8 +226,8 @@ export default {
       install: {
         them: { en: "Install AnyDesk", pt: "Instalar o AnyDesk" },
         us: {
-          en: "Install Deskline on this computer",
-          pt: "Instalar o Deskline neste computador",
+          en: "Settings, Install for all users",
+          pt: "Configurações, Instalar para todos os usuários",
         },
       },
       book: {
@@ -220,9 +253,142 @@ export default {
       },
     },
     missing: {
-      en: "Not there yet: session recording, Wake-on-LAN, TCP tunnels and phone apps.",
-      pt: "Ainda não tem: gravação de sessão, Wake-on-LAN, túneis TCP e app de celular.",
+      en: "Not there yet: session recording, Wake-on-LAN, TCP tunnels, phone apps, and an AI agent working on a computer once its owner clicks Accept.",
+      pt: "Ainda não tem: gravação de sessão, Wake-on-LAN, túneis TCP, app de celular e um agente de IA trabalhando num computador depois que o dono clica em Aceitar.",
     },
+  },
+  trouble: {
+    title: { en: "When something's wrong", pt: "Quando algo dá errado" },
+    see: { en: "What you see", pt: "O que aparece" },
+    do: { en: "What to do", pt: "O que fazer" },
+    rows: {
+      gatekeeper: {
+        see: {
+          en: "macOS says it can't check Deskline for malware, or that it's damaged",
+          pt: "O macOS diz que não consegue verificar o Deskline, ou que ele está danificado",
+        },
+        do: {
+          en: "Install it with the line in Terminal above, which macOS doesn't stop. Or try once, then System Settings, Privacy & Security, Open Anyway and your password.",
+          pt: "Instala com a linha no Terminal ali em cima, que o macOS não barra. Ou tenta uma vez, depois Ajustes do Sistema, Privacidade e Segurança, Abrir Mesmo Assim e sua senha.",
+        },
+      },
+      smartscreen: {
+        see: {
+          en: "Windows says it protected your PC",
+          pt: "O Windows diz que protegeu o computador",
+        },
+        do: {
+          en: "More info, then Run anyway. The build isn't signed with a paid certificate yet.",
+          pt: "Mais informações e depois Executar assim mesmo. O Deskline ainda não é assinado com um certificado pago.",
+        },
+      },
+      screen: {
+        see: {
+          en: "A Mac's screen doesn't come through",
+          pt: "A tela de um Mac não chega",
+        },
+        do: {
+          en: "On the Mac, Deskline's home lists what's left to allow. Allow Screen Recording, and restart Deskline if it still says it isn't allowed.",
+          pt: "No Mac, o início do Deskline mostra o que falta permitir. Permite a Gravação de Tela e reinicia o Deskline se ela continuar como não permitida.",
+        },
+      },
+      input: {
+        see: {
+          en: "Clicks and keys don't reach a Mac",
+          pt: "Cliques e teclas não chegam no Mac",
+        },
+        do: {
+          en: "Allow Accessibility. Deskline asks for it when the Mac accepts with Let them control ticked, and its home has the button too.",
+          pt: "Permite a Acessibilidade. O Deskline pede quando o Mac aceita com Deixar controlar marcado, e o botão também fica no início dele.",
+        },
+      },
+      update: {
+        see: {
+          en: "After an update, a Mac shows Deskline as allowed and nothing works",
+          pt: "Depois de uma atualização, o Mac mostra o Deskline como permitido e nada funciona",
+        },
+        do: {
+          en: "Open Deskline: after an update it clears an answer that stopped working, so its home can ask again. From 0.9.0 every release is signed the same way, so macOS keeps the answer.",
+          pt: "Abre o Deskline: depois de uma atualização ele limpa uma resposta que parou de valer, pra que o início dele pergunte de novo. Desde a 0.9.0 toda versão é assinada do mesmo jeito, então o macOS guarda a resposta.",
+        },
+      },
+      sound: {
+        see: { en: "No sound from a Mac", pt: "Sem som de um Mac" },
+        do: {
+          en: "Sharing a Mac's sound needs macOS 14.6 or later, or a loopback device such as BlackHole.",
+          pt: "Compartilhar o som de um Mac precisa do macOS 14.6 ou mais novo, ou de um dispositivo de loopback como o BlackHole.",
+        },
+      },
+      linux: {
+        see: {
+          en: "On Linux, a screen is missing or control doesn't work",
+          pt: "No Linux, falta uma tela ou o controle não funciona",
+        },
+        do: {
+          en: "Your system's sharing dialog decides both. Choose screens, on the red bar, opens it again.",
+          pt: "Quem decide as duas coisas é o diálogo de compartilhamento do sistema. Escolher telas, na barra vermelha, abre ele de novo.",
+        },
+      },
+      signin: {
+        see: {
+          en: "The Windows sign-in screen can't be reached",
+          pt: "Não dá pra chegar na tela de login do Windows",
+        },
+        do: {
+          en: "Install Deskline on that computer, from Settings, Install for all users: its service starts before anyone signs in.",
+          pt: "Instala o Deskline naquele computador, em Configurações, Instalar para todos os usuários: o serviço dele sobe antes de alguém entrar.",
+        },
+      },
+      other: {
+        see: { en: "Anything else", pt: "Qualquer outra coisa" },
+        do: {
+          en: "In Deskline, Settings, Report a problem: say what happened, and it adds its version and the system, never your code.",
+          pt: "No Deskline, Configurações, Relatar um problema: conta o que aconteceu, e ele junta a versão e o sistema, nunca o seu código.",
+        },
+      },
+    },
+    issue: {
+      en: "Or open an issue on GitHub",
+      pt: "Ou abre uma issue no GitHub",
+    },
+  },
+  news: {
+    title: { en: "What's new", pt: "O que mudou" },
+    releases: {
+      v090: {
+        en: "On a Mac, Deskline's home asks for Screen Recording and Accessibility before anyone connects, and Accessibility comes up when you accept someone who may control. Every release from here on is signed the same way, so macOS keeps those answers across updates. Settings has Report a problem, and an error has Report this beside it.",
+        pt: "No Mac, o início do Deskline pede a Gravação de Tela e a Acessibilidade antes de alguém conectar, e a Acessibilidade aparece quando você aceita alguém que pode controlar. Daqui pra frente toda versão é assinada do mesmo jeito, então o macOS guarda essas respostas nas atualizações. As Configurações têm Relatar um problema, e um erro vem com Relatar isso do lado.",
+      },
+      v080: {
+        en: "Native picture for games: their screen at its own size, up to 4K, and its own refresh rate, up to 240 frames a second. On Linux the viewer asks for other screens with a click, and when a computer refuses the mouse or keyboard, the viewer is told why.",
+        pt: "Imagem Nativa pra jogos: a tela da pessoa no tamanho dela, até 4K, e na taxa de atualização dela, até 240 frames por segundo. No Linux, quem vê pede outras telas com um clique, e quando um computador recusa o mouse ou o teclado, quem vê fica sabendo o porquê.",
+      },
+      v070: {
+        en: "Copy and paste files between the two computers, and a Files panel that reads well.",
+        pt: "Copiar e colar arquivos entre os dois computadores, e um painel de Arquivos que dá pra ler direito.",
+      },
+      v060: {
+        en: "Games at 120 frames a second, and Capture mouse for games that hide the pointer. The GPU's encoder on Linux, and on Windows the picture stays on the GPU from capture to encoder.",
+        pt: "Jogos a 120 frames por segundo, e Capturar mouse pros jogos que escondem o ponteiro. O encoder da GPU no Linux, e no Windows a imagem fica na GPU da captura até o encoder.",
+      },
+      v040: {
+        en: "A calmer window: nothing boxed, scrolling that works, and focus you can see.",
+        pt: "Uma janela mais calma: nada em caixa, rolagem que funciona e foco que dá pra ver.",
+      },
+      v030: {
+        en: "The look it has now, from luannzin.com's system, in English and Portuguese.",
+        pt: "O visual de agora, do sistema do luannzin.com, em inglês e português.",
+      },
+      v021: {
+        en: "A picture that adapts to the connection, encoding on the GPU, the pixel-art mark, and a portable macOS zip.",
+        pt: "Uma imagem que se adapta à conexão, encode na GPU, a marca em pixel art e um zip portátil pro macOS.",
+      },
+      v020: {
+        en: "The first release: send your code, accept, and the other computer sees and controls your screen.",
+        pt: "A primeira versão: você manda seu código, aceita, e o outro computador vê e controla sua tela.",
+      },
+    },
+    all: { en: "Every release on GitHub", pt: "Todas as versões no GitHub" },
   },
   safe: {
     title: { en: "Who can get in", pt: "Quem consegue entrar" },

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { getLocale, intlConfig, type Locale, t } from "@/i18n/generated";
 import { changeLocale } from "@/lib/locale";
+import { InstallLine } from "./install-line";
 import { NightField } from "./night-field";
 import { PixelName } from "./pixel-name";
 
@@ -22,6 +23,8 @@ export type File = {
   how: string;
   /** What the system says the first time, and how to get past it. */
   first?: string;
+  /** A line to paste in a terminal instead, which the system doesn't stop: what it does, and the line. */
+  line?: { text: string; command: string };
 };
 
 /** The system a request comes from, read from its client hints and agent. */
@@ -119,6 +122,18 @@ export async function Line({
                         {yours.first}
                       </p>
                     )}
+                    {yours.line && (
+                      <div className="flex w-full flex-col gap-2">
+                        <p className="max-w-md text-pretty text-foreground/70">
+                          {yours.line.text}
+                        </p>
+                        <InstallLine
+                          command={yours.line.command}
+                          copy={l.copy}
+                          copied={l.copied}
+                        />
+                      </div>
+                    )}
                     <a
                       href="#files"
                       className="text-foreground underline decoration-foreground/25 underline-offset-[3px] transition-colors hover:decoration-foreground/60"
@@ -196,6 +211,18 @@ export async function Line({
                       <span className="text-pretty text-muted-foreground">
                         {file.how}
                       </span>
+                      {file.line && (
+                        <div className="mt-2 flex flex-col gap-2">
+                          <span className="text-pretty text-muted-foreground">
+                            {file.line.text}
+                          </span>
+                          <InstallLine
+                            command={file.line.command}
+                            copy={l.copy}
+                            copied={l.copied}
+                          />
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}

@@ -273,7 +273,13 @@ The link between two windows, drawn on the same dot grid. At rest, a band of vio
 A copy of an app's own window, built in that app's system (for Deskline: the top bar with the mark and one underlined tab, the code, the prompt card, the red sharing bar, the session toolbar with its meter, the video on black). Ground fill, 14px corners, Window lift, as tall as what it shows (a shared screen is 16:10, never letterboxed), labelled above in Muted Ink with what it stands for; side by side the two windows align at the top and the link's column stretches between them. A field paired with its button stays on one line while the field keeps 14rem, and the button drops below it otherwise; the field's hint is in Inter so it fits whole in either language. A prompt arrives over a 55% black dim, the card rising from 0.96 with a fade over 200ms; under reduced motion it only fades. Focus follows the question: to Accept when asked, to Stop sharing once answered, back to Copy code or the code field when it ends.
 
 ### Every File
-A table on hairline rules: the system and versions in weight 500 (with "yours" under the detected one), the exact file name as a Mono link, and how to run it in Muted Ink.
+A table on hairline rules: the system and versions in weight 500 (with "yours" under the detected one), the exact file name as a Mono link, and how to run it in Muted Ink. A file with an install line shows it under how to run it.
+
+### Install Line
+A line to paste in a terminal, for a system that stops a downloaded file (Deskline on macOS). One sentence above it says what it saves you; then the line in Mono 14px on a Field Well with the input-alpha border and 10px corners, kept on one line as it's pasted (it scrolls sideways where it doesn't fit, and its length never widens the page), with an outline Copy beside it that reads Copied for 2 seconds. It sits under the hero's first-run note and under its file's row in Every file; a line's own sections may show it once more where they walk through the first time.
+
+### Ruled Lists (a line's sections)
+Comparisons and troubleshooting are tables on hairline rules: the left column (what they know from elsewhere, what you see) in Muted Ink at two fifths, the answer in Soft Ink. Releases are a list on the same rules, the version as a Mono link to its release over its date in Muted Mono, the notes in Soft Ink beside them (under them on phones), newest first.
 
 ### Hostline Shell (signature)
 Every moment of a Hostline link that isn't the shared app: opening, the beat between the line coming up and the app's first page, waiting, ended, unsupported. The full-screen Night Field with Hostline's globe as the glow's subject and the words in its calm: the state as a Title in Paper Ink, one line under it in Soft Ink, in a polite live region. No button, no spinner, no card.
