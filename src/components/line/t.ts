@@ -16,6 +16,7 @@ export default {
   },
   footer: {
     source: { en: "Source on GitHub", pt: "Código no GitHub" },
+    post: { en: "How it works", pt: "Como funciona" },
     by: { en: "Made by Luan Fabri", pt: "Feito por Luan Fabri" },
     language: { en: "Language", pt: "Idioma" },
   },

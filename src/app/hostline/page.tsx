@@ -1,31 +1,14 @@
 import type { Metadata } from "next";
-import { type File, Line, Part } from "@/components/line/line";
+import { Line, Part } from "@/components/line/line";
 import { getLocale, setLocale, t } from "@/i18n/generated";
+import { lineMetadata } from "@/lib/seo";
+import { about } from "./about";
 import { Demo } from "./demo/demo";
 import { LINK } from "./shell/link";
 import { Shell } from "./shell/shell";
 
-// public/hostline/install.sh and install.ps1, served at the subdomain's root (src/proxy.ts)
-const UNIX = "curl -fsSL https://hostline.luannzin.com/install.sh | sh";
-const WINDOWS = "irm https://hostline.luannzin.com/install.ps1 | iex";
-
 export async function generateMetadata(): Promise<Metadata> {
-  await setLocale();
-  const m = t.app.hostline.meta;
-  return {
-    title: m.title,
-    description: m.description,
-    alternates: { canonical: "/" },
-    openGraph: {
-      type: "website",
-      url: "/",
-      siteName: "Hostline",
-      locale: m.ogLocale,
-      title: m.title,
-      description: m.description,
-    },
-    twitter: { card: "summary_large_image", creator: "@__luannzin" },
-  };
+  return lineMetadata(about, await setLocale(), t.app.hostline.meta);
 }
 
 // Every path on hostline.luannzin.com lands here (src/proxy.ts): without a link after the `#`
@@ -34,36 +17,6 @@ export default async function Hostline() {
   await setLocale();
   const p = t.app.hostline;
   const f = p.files;
-  // the README's install table, in its order; names are the release assets'
-  const files: File[] = [
-    {
-      system: "linux",
-      label: f.linux.system,
-      name: "hostline-linux-x86_64",
-      how: f.linux.how,
-      line: { text: f.linux.line, command: UNIX },
-    },
-    {
-      system: "linux",
-      label: f.arm.system,
-      name: "hostline-linux-arm64",
-      how: f.arm.how,
-    },
-    {
-      system: "mac",
-      label: f.mac.system,
-      name: "hostline-macos",
-      how: f.mac.how,
-      line: { text: f.mac.line, command: UNIX },
-    },
-    {
-      system: "windows",
-      label: f.windows.system,
-      name: "hostline-windows-x86_64.exe",
-      how: f.windows.how,
-      line: { text: f.windows.line, command: WINDOWS },
-    },
-  ];
 
   return (
     <>
@@ -77,13 +30,11 @@ export default async function Hostline() {
       />
       <div className="flex flex-1 flex-col [html[data-link]_&]:hidden">
         <Line
-          name="Hostline"
-          repo="luannzin/hostline"
+          about={about}
           mark="/hostline/mark.png"
           line={p.hero.line}
           lead={p.hero.lead}
           phone={p.hero.phone}
-          files={files}
           updates={f.updates}
           command
           steps={

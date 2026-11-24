@@ -2,9 +2,10 @@ import { DownloadIcon } from "lucide-react";
 import { headers } from "next/headers";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { getLocale, intlConfig, type Locale, t } from "@/i18n/generated";
-import { changeLocale } from "@/lib/locale";
+import { getLocale, t } from "@/i18n/generated";
+import { type About, download, JsonLd, site, structuredData } from "@/lib/seo";
 import { InstallLine } from "./install-line";
+import { Languages } from "./languages";
 import { NightField } from "./night-field";
 import { PixelName } from "./pixel-name";
 
@@ -47,27 +48,23 @@ const SYSTEM_NAMES: Record<System, string> = {
 };
 
 export async function Line({
-  name,
-  repo,
+  about,
   mark,
   line,
   lead,
   phone,
-  files,
   updates,
   command = false,
   steps,
   live,
   children,
 }: {
-  name: string;
-  repo: string;
+  /** The line's name, repo, files (in the README's install-table order; the first of each system is its default) and post. */
+  about: About;
   mark: string;
   line: string;
   lead: string;
   phone: string;
-  /** In the order the README's install table lists them; the first of each system is its default. */
-  files: File[];
   updates: string;
   /** A command-line app: the hero offers the visitor's install line instead of a download. */
   command?: boolean;
@@ -76,14 +73,16 @@ export async function Line({
   children: ReactNode;
 }) {
   const l = t.components.line;
+  const locale = getLocale();
+  const { name, repo, post } = about;
+  const files = about.files(locale);
   const system = await detect();
   const yours =
     system === "phone" ? null : files.find((f) => f.system === system);
-  const url = (file: File) =>
-    `https://github.com/${repo}/releases/latest/download/${file.name}`;
 
   return (
     <>
+      <JsonLd data={structuredData(about, locale)} />
       <main className="flex-1">
         <section className="relative isolate overflow-hidden">
           {/* the night, short of the section's last 10rem: NightField
@@ -93,13 +92,17 @@ export async function Line({
           <div className="relative mx-auto max-w-6xl px-6 pt-14 pb-44 sm:pt-20 lg:px-10">
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
               <div data-calm className="flex max-w-xl flex-col">
-                <h1 className="text-[42px] leading-none sm:text-[56px]">
-                  <span className="sr-only">{name}</span>
-                  <PixelName name={name} />
+                {/* the line is part of the heading, so the page's title says
+                    what the app is, not only its name */}
+                <h1>
+                  <span className="block text-[42px] leading-none sm:text-[56px]">
+                    <span className="sr-only">{name}: </span>
+                    <PixelName name={name} />
+                  </span>
+                  <span className="mt-8 block text-balance font-medium text-lg sm:text-xl">
+                    {line}
+                  </span>
                 </h1>
-                <p className="mt-8 text-balance font-medium text-lg sm:text-xl">
-                  {line}
-                </p>
                 <p className="mt-3 text-pretty text-foreground/70">{lead}</p>
 
                 {yours ? (
@@ -110,7 +113,7 @@ export async function Line({
                           size="xl"
                           render={
                             // biome-ignore lint/a11y/useAnchorContent: the button's children fill it
-                            <a href={url(yours)} />
+                            <a href={download(repo, yours)} />
                           }
                         >
                           <DownloadIcon aria-hidden="true" strokeWidth={1.5} />
@@ -212,7 +215,7 @@ export async function Line({
                     </th>
                     <td className="flex flex-col gap-1">
                       <a
-                        href={url(file)}
+                        href={download(repo, file)}
                         className="self-start font-mono text-sm underline decoration-foreground/25 underline-offset-[3px] transition-colors hover:decoration-foreground/60"
                       >
                         {file.name}
@@ -260,13 +263,21 @@ export async function Line({
           >
             {l.footer.source}
           </a>
+          {post && (
+            <a
+              href={site(post, locale)}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {l.footer.post}
+            </a>
+          )}
           <a
-            href="https://www.luannzin.com"
+            href={site("/", locale)}
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             {l.footer.by}
           </a>
-          <Languages />
+          <Languages current={locale} label={l.footer.language} />
         </div>
       </footer>
     </>
@@ -294,30 +305,5 @@ export function Part({
       </h2>
       <div className="min-w-0 max-w-3xl">{children}</div>
     </section>
-  );
-}
-
-const NAMES: Record<Locale, string> = { en: "English", pt: "Português" };
-
-/** The language, switched by a Server Action that sets the cookie. */
-function Languages() {
-  return (
-    <nav
-      aria-label={t.components.line.footer.language}
-      className="ml-auto flex gap-4"
-    >
-      {intlConfig.locales.map((locale) => (
-        <form key={locale} action={changeLocale.bind(null, locale)}>
-          <button
-            type="submit"
-            lang={locale}
-            className="cursor-pointer text-muted-foreground transition-colors hover:text-foreground aria-[current=true]:text-foreground"
-            aria-current={locale === getLocale()}
-          >
-            {NAMES[locale]}
-          </button>
-        </form>
-      ))}
-    </nav>
   );
 }

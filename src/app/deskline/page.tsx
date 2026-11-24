@@ -1,96 +1,28 @@
 import type { Metadata } from "next";
 import { InstallLine } from "@/components/line/install-line";
-import { type File, Line, Part } from "@/components/line/line";
+import { Line, Part } from "@/components/line/line";
 import { getLocale, setLocale, t } from "@/i18n/generated";
+import { lineMetadata } from "@/lib/seo";
+import { about, INSTALL, RELEASES, REPO } from "./about";
 import { Demo } from "./demo/demo";
 
-// public/deskline/install.sh, served at the subdomain's root (src/proxy.ts)
-const INSTALL = "curl -fsSL https://deskline.luannzin.com/install.sh | sh";
-const REPO = "https://github.com/luannzin/deskline";
-
-/** The releases, newest first: version and the day it came out (GitHub's release dates). */
-const RELEASES = [
-  ["0.9.0", "2026-11-24", "v090"],
-  ["0.8.0", "2026-11-19", "v080"],
-  ["0.7.0", "2026-11-19", "v070"],
-  ["0.6.0", "2026-11-19", "v060"],
-  ["0.4.0", "2026-11-18", "v040"],
-  ["0.3.0", "2026-11-18", "v030"],
-  ["0.2.1", "2026-11-18", "v021"],
-  ["0.2.0", "2026-11-18", "v020"],
-] as const;
-
 export async function generateMetadata(): Promise<Metadata> {
-  await setLocale();
-  const m = t.app.deskline.meta;
-  return {
-    title: m.title,
-    description: m.description,
-    alternates: { canonical: "/" },
-    openGraph: {
-      type: "website",
-      url: "/",
-      siteName: "Deskline",
-      locale: m.ogLocale,
-      title: m.title,
-      description: m.description,
-    },
-    twitter: { card: "summary_large_image", creator: "@__luannzin" },
-  };
+  return lineMetadata(about, await setLocale(), t.app.deskline.meta);
 }
 
 export default async function Deskline() {
   await setLocale();
   const p = t.app.deskline;
   const c = t.components.line;
-  const f = p.files;
-  // README's install table, in its order; names are the release assets'
-  const files: File[] = [
-    {
-      system: "windows",
-      label: f.windows.system,
-      name: "deskline.exe",
-      how: f.windows.how,
-      first: f.windows.first,
-    },
-    {
-      system: "linux",
-      label: f.deb.system,
-      name: "deskline_amd64.deb",
-      how: f.deb.how,
-    },
-    {
-      system: "linux",
-      label: f.portable.system,
-      name: "deskline-linux-x86_64",
-      how: f.portable.how,
-    },
-    {
-      system: "mac",
-      label: f.dmg.system,
-      name: "Deskline.dmg",
-      how: f.dmg.how,
-      first: f.dmg.first,
-      line: { text: f.dmg.line, command: INSTALL },
-    },
-    {
-      system: "mac",
-      label: f.zip.system,
-      name: "Deskline-macos.zip",
-      how: f.zip.how,
-    },
-  ];
 
   return (
     <Line
-      name="Deskline"
-      repo="luannzin/deskline"
+      about={about}
       mark="/deskline/mark.png"
       line={p.hero.line}
       lead={p.hero.lead}
       phone={p.hero.phone}
-      files={files}
-      updates={f.updates}
+      updates={p.files.updates}
       steps={
         <>
           <p className="font-medium">{p.hero.sent}</p>

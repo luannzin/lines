@@ -5,8 +5,8 @@ export default {
       pt: "Deskline: acesso remoto sem servidor pra rodar",
     },
     description: {
-      en: "Every computer has a code. Paste someone's code, they accept, and you see their screen. Free and open source for Windows, macOS and Linux.",
-      pt: "Todo computador tem um código. Você cola o código de alguém, a pessoa aceita e você vê a tela dela. Grátis e de código aberto, pra Windows, macOS e Linux.",
+      en: "A free, open source remote desktop for Windows, macOS and Linux. No account and no server to run: paste someone's code, they accept, and you see their screen.",
+      pt: "Acesso remoto grátis e de código aberto pra Windows, macOS e Linux. Sem conta e sem servidor pra rodar: você cola o código de alguém, a pessoa aceita e você vê a tela dela.",
     },
     ogLocale: { en: "en_US", pt: "pt_BR" },
   },
