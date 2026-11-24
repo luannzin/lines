@@ -100,7 +100,7 @@ export async function open(key: CryptoKey, content: string): Promise<unknown> {
  */
 export async function meet(
   link: Link,
-  offer: { sdp: string; who: string },
+  offer: { sdp: string; who: string; v: string },
   onAnswer: (answer: Answer) => void,
 ): Promise<() => void> {
   const [tag, key] = await Promise.all([

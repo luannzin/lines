@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // PowerShell's `irm | iex` runs the installer as text; served as a
+        // binary it may not (public/hostline/install.ps1, at /install.ps1)
+        source: "/:dir*/install.ps1",
+        headers: [{ key: "Content-Type", value: "text/plain; charset=utf-8" }],
+      },
+      {
         // A shared app runs in a frame of this page and may need the camera,
         // the microphone or the location (the frame's `allow` passes them on).
         source: "/:path*",

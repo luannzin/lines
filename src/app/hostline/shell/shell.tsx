@@ -6,7 +6,9 @@ import { NightField } from "@/components/line/night-field";
 import { type Locale, translations } from "@/i18n/generated";
 import { bayer, DUSK } from "@/lib/dusk";
 import { cn } from "@/lib/utils";
+import { type Cookie, read, write } from "./jar";
 import { parseLink } from "./link";
+import { beat, space, sweep, wipe } from "./storage";
 import { connect, type Head, type SocketSink, type Tunnel } from "./tunnel";
 
 type State =
@@ -25,6 +27,11 @@ declare global {
       socket: Tunnel["socket"];
       at(path: string): void;
       ready(): void;
+      /** What goes in front of the app's storage keys and database names (storage.ts). */
+      space: string;
+      /** `document.cookie` on a page at `path` (jar.ts). */
+      cookie(path: string): string;
+      setCookie(text: string, path: string): void;
     };
   }
 }
@@ -63,9 +70,14 @@ export function Shell({ locale }: { locale: Locale }) {
     }
     setState({ k: "opening" });
     const sw = navigator.serviceWorker;
+    // this link's storage stays while a tab has it open; links that ended unseen get wiped
+    const stopBeat = beat(link.host);
+    void sweep(link.host);
     const home = document.title;
     let tunnel: Tunnel | null = null;
     let over = false;
+    // the cookies the app's JavaScript may read, as the last response left them
+    let jar: Cookie[] = [];
     // the service worker's request id, to the line's
     const ids = new Map<number, number>();
 
@@ -151,6 +163,12 @@ export function Shell({ locale }: { locale: Locale }) {
         next.close();
         document.title = home;
         setState({ k: "ended" });
+        // the app goes, and everything it stored under this link with it
+        frame.current?.setAttribute("src", "about:blank");
+        void wipe(link.host);
+      };
+      next.onCookies = (c) => {
+        jar = c;
       };
       next.onLost = () => {
         if (over || tunnel !== next) return;
@@ -175,6 +193,12 @@ export function Shell({ locale }: { locale: Locale }) {
     addEventListener("hashchange", onHash);
 
     window.__hostline = {
+      space: space(link.host),
+      cookie: (path) => read(jar, path),
+      setCookie: (text, path) => {
+        jar = write(jar, text, path);
+        tunnel?.cookie(path, text);
+      },
       socket: (url, protocols, sink: SocketSink) => {
         if (!tunnel) throw new Error("Hostline isn't connected");
         return tunnel.socket(url, protocols, sink);
@@ -203,6 +227,7 @@ export function Shell({ locale }: { locale: Locale }) {
 
     return () => {
       over = true;
+      stopBeat();
       sw.controller?.postMessage({ k: "idle" });
       removeEventListener("hashchange", onHash);
       sw.removeEventListener("message", onAsk);

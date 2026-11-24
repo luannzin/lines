@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  type PointerEvent,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type PointerEvent, useEffect, useRef, useState } from "react";
+import { Window } from "@/components/line/window";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -235,7 +230,9 @@ export function Demo({ locale }: { locale: Locale }) {
 
   return (
     <div className="grid gap-y-8 lg:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1fr)]">
-      <Frame label={labels.you}>
+      {/* each window as tall as what it shows: a stretched one would letterbox
+          its screen; the link's column between them stretches instead */}
+      <Window label={labels.you} className="self-start">
         <HostWindow
           d={d}
           code={code}
@@ -248,7 +245,7 @@ export function Demo({ locale }: { locale: Locale }) {
           onControl={setControl}
           onStop={stopSharing}
         />
-      </Frame>
+      </Window>
       {/* the link spans the whole gap: on a phone, the space between the
           stacked windows; on a wide screen, the column between them */}
       <div className="relative flex flex-col justify-center lg:pt-9">
@@ -273,7 +270,7 @@ export function Demo({ locale }: { locale: Locale }) {
           {stats && `${d[stats.route]} ${stats.rttMs ?? 0} ms`}
         </p>
       </div>
-      <Frame label={labels.helper}>
+      <Window label={labels.helper} className="self-start">
         <ViewerWindow
           d={d}
           viewer={viewer}
@@ -288,7 +285,7 @@ export function Demo({ locale }: { locale: Locale }) {
           onDisconnect={disconnect}
           onPointer={send}
         />
-      </Frame>
+      </Window>
       <p
         aria-live="polite"
         className="max-w-2xl text-pretty text-muted-foreground lg:col-span-3"
@@ -296,23 +293,6 @@ export function Demo({ locale }: { locale: Locale }) {
         {stats?.route === "lan" ? labels.same : null}
       </p>
     </div>
-  );
-}
-
-/** A window with what it stands for written over it. */
-function Frame({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    // each window as tall as what it shows: a stretched one would letterbox
-    // its screen; the link's column between them stretches instead
-    <section
-      aria-label={label}
-      className="flex min-w-0 flex-col gap-3 self-start"
-    >
-      <h3 className="text-muted-foreground">{label}</h3>
-      <div className="relative flex flex-1 flex-col overflow-hidden rounded-[14px] bg-background shadow-[inset_0_0_0_1px_var(--border),0_24px_48px_-24px_rgb(0_0_0/0.6)]">
-        {children}
-      </div>
-    </section>
   );
 }
 

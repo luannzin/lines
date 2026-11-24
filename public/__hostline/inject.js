@@ -1,7 +1,8 @@
 // Runs first in every page of an app shared through Hostline, inside the frame the link's page
 // opens. Its jobs: carry the app's WebSockets (hot reload, live data) over the line to the host's
-// machine, keep the address bar on the app's path, and say when the page is in, so the link's
-// page shows it. The service worker adds this script.
+// machine, give the app the cookies of the jar on that machine and storage of its own for this
+// link, keep the address bar on the app's path, and say when the page is in, so the link's page
+// shows it. The service worker adds this script.
 (() => {
   const line = window.parent !== window && window.parent.__hostline;
   if (!line) return;
@@ -93,6 +94,88 @@
         : new target(url, protocols);
     },
   });
+
+  // document.cookie reads and writes the jar on the host's machine; the link's page keeps a copy
+  // (src/app/hostline/shell/jar.ts).
+  Object.defineProperty(document, "cookie", {
+    configurable: true,
+    get: () => line.cookie(location.pathname),
+    set: (text) => line.setCookie(String(text), location.pathname),
+  });
+
+  // Storage of its own for this link: every key and database name gets the link's space in front
+  // (shell/storage.ts), which the link's page wipes when the link ends. The app sees its own
+  // names. ponytail: IDBDatabase.name and Cache Storage (caches) still show or share the rest.
+  const space = line.space;
+  const scoped = (store) => {
+    const keys = () => {
+      const out = [];
+      for (let i = 0; i < store.length; i++) {
+        const k = store.key(i);
+        if (k?.startsWith(space)) out.push(k.slice(space.length));
+      }
+      return out;
+    };
+    const api = {
+      getItem: (k) => store.getItem(space + k),
+      setItem: (k, v) => store.setItem(space + k, String(v)),
+      removeItem: (k) => store.removeItem(space + k),
+      clear: () => {
+        for (const k of keys()) store.removeItem(space + k);
+      },
+      key: (i) => keys()[i] ?? null,
+      get length() {
+        return keys().length;
+      },
+    };
+    const named = (p) => typeof p === "string" && !(p in api);
+    // localStorage.x and Object.keys(localStorage) work as on a real Storage
+    return new Proxy(api, {
+      get: (t, p) =>
+        named(p) ? (store.getItem(space + p) ?? undefined) : t[p],
+      set: (_, p, v) => {
+        if (named(p)) api.setItem(p, v);
+        return true;
+      },
+      deleteProperty: (_, p) => {
+        if (named(p)) api.removeItem(p);
+        return true;
+      },
+      has: (t, p) => (named(p) ? store.getItem(space + p) !== null : p in t),
+      ownKeys: () => keys(),
+      getOwnPropertyDescriptor: (_, p) => {
+        const value = named(p) ? store.getItem(space + p) : null;
+        if (value === null) return undefined;
+        return { value, writable: true, enumerable: true, configurable: true };
+      },
+    });
+  };
+  for (const name of ["localStorage", "sessionStorage"]) {
+    try {
+      const store = window[name];
+      Object.defineProperty(window, name, {
+        value: scoped(store),
+        configurable: true,
+      });
+    } catch {
+      // storage this browser refuses (some private windows): left as it is
+    }
+  }
+  const idb = window.indexedDB;
+  if (idb) {
+    const { open, deleteDatabase, databases } = IDBFactory.prototype;
+    idb.open = (name, ...version) => open.call(idb, space + name, ...version);
+    idb.deleteDatabase = (name) => deleteDatabase.call(idb, space + name);
+    if (databases)
+      idb.databases = () =>
+        databases
+          .call(idb)
+          .then((list) =>
+            list
+              .filter((db) => db.name?.startsWith(space))
+              .map((db) => ({ ...db, name: db.name.slice(space.length) })),
+          );
+  }
 
   const report = () => line.at(location.pathname + location.search);
   for (const name of ["pushState", "replaceState"]) {

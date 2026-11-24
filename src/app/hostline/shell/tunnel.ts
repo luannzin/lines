@@ -3,8 +3,10 @@
 // what it is, four naming the request or socket, then the payload. The hostline CLI's
 // src/peer.rs is the other end and PROTOCOL.md there lists the frames.
 
+import type { Cookie } from "./jar";
 import { type Link, who } from "./link";
 import { type Answer, meet } from "./signal";
+import { visitor } from "./storage";
 
 const REQ = 1;
 const REQ_BODY = 2;
@@ -20,6 +22,7 @@ const WS_BIN = 11;
 const WS_CLOSE = 12;
 const FAIL = 13;
 const BYE = 14;
+const COOKIE = 15;
 
 /** Under every browser's data channel message limit. */
 const CHUNK = 16 * 1024;
@@ -28,7 +31,13 @@ const STUN = ["stun:stun.l.google.com:19302", "stun:stun.cloudflare.com:3478"];
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
-export type Head = { s: number; t: string; h: [string, string][] };
+export type Head = {
+  s: number;
+  t: string;
+  h: [string, string][];
+  /** The cookies the page's JavaScript may read, after this response. */
+  c?: Cookie[];
+};
 
 export type Sink = {
   head(head: Head): void;
@@ -59,6 +68,11 @@ export class Tunnel {
   onBye = () => {};
   /** The connection dropped without a goodbye. */
   onLost = () => {};
+  /** A response brought the cookies the app's JavaScript may read. */
+  onCookies = (_: Cookie[]) => {};
+  /** Responses to requests older than this were made before the app's last cookie reached the
+   * host, so their cookies would undo it. */
+  #cookieAt = 0;
 
   constructor(pc: RTCPeerConnection, dc: RTCDataChannel, answer: Answer) {
     this.#pc = pc;
@@ -108,6 +122,12 @@ export class Tunnel {
     return id;
   }
 
+  /** `document.cookie = text` on a page at `path`: to the host's jar, ahead of the next request. */
+  cookie(path: string, text: string) {
+    this.#cookieAt = this.#next;
+    this.#frame(COOKIE, 0, JSON.stringify({ u: path, c: text }));
+  }
+
   cancel(id: number) {
     if (this.#requests.delete(id)) this.#frame(CANCEL, id);
   }
@@ -141,9 +161,12 @@ export class Tunnel {
     const req = this.#requests.get(id);
     const ws = this.#sockets.get(id);
     switch (kind) {
-      case RES:
-        req?.head(json());
+      case RES: {
+        const head: Head = json();
+        if (head.c && id >= this.#cookieAt) this.onCookies(head.c);
+        req?.head(head);
         break;
+      }
       case RES_BODY:
         req?.body(payload.slice());
         break;
@@ -181,7 +204,7 @@ export class Tunnel {
   }
 }
 
-function gathered(pc: RTCPeerConnection, ms: number) {
+export function gathered(pc: RTCPeerConnection, ms: number) {
   if (pc.iceGatheringState === "complete") return Promise.resolve();
   return new Promise<void>((resolve) => {
     const done = () => {
@@ -210,7 +233,8 @@ export async function connect(
   const waiting = setTimeout(onWaiting, 8000);
   const answer = await new Promise<Answer>((resolve) => {
     let answered = false;
-    void meet(link, { sdp, who: who(navigator.userAgent) }, (a) => {
+    const offer = { sdp, who: who(navigator.userAgent), v: visitor(link.host) };
+    void meet(link, offer, (a) => {
       if (answered) return;
       answered = true;
       resolve(a);

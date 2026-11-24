@@ -55,6 +55,7 @@ export async function Line({
   phone,
   files,
   updates,
+  command = false,
   steps,
   live,
   children,
@@ -68,6 +69,8 @@ export async function Line({
   /** In the order the README's install table lists them; the first of each system is its default. */
   files: File[];
   updates: string;
+  /** A command-line app: the hero offers the visitor's install line instead of a download. */
+  command?: boolean;
   steps: ReactNode;
   live: ReactNode;
   children: ReactNode;
@@ -101,22 +104,28 @@ export async function Line({
 
                 {yours ? (
                   <div className="mt-10 flex flex-col items-start gap-3">
-                    <Button
-                      size="xl"
-                      render={
-                        // biome-ignore lint/a11y/useAnchorContent: the button's children fill it
-                        <a href={url(yours)} />
-                      }
-                    >
-                      <DownloadIcon aria-hidden="true" strokeWidth={1.5} />
-                      {l.downloadFor({ system: SYSTEM_NAMES[yours.system] })}
-                    </Button>
-                    <p className="text-muted-foreground">
-                      <span className="font-mono text-foreground text-sm">
-                        {yours.name}
-                      </span>{" "}
-                      · {yours.label}
-                    </p>
+                    {!command && (
+                      <>
+                        <Button
+                          size="xl"
+                          render={
+                            // biome-ignore lint/a11y/useAnchorContent: the button's children fill it
+                            <a href={url(yours)} />
+                          }
+                        >
+                          <DownloadIcon aria-hidden="true" strokeWidth={1.5} />
+                          {l.downloadFor({
+                            system: SYSTEM_NAMES[yours.system],
+                          })}
+                        </Button>
+                        <p className="text-muted-foreground">
+                          <span className="font-mono text-foreground text-sm">
+                            {yours.name}
+                          </span>{" "}
+                          · {yours.label}
+                        </p>
+                      </>
+                    )}
                     {yours.first && (
                       <p className="max-w-md text-pretty text-foreground/70">
                         {yours.first}
