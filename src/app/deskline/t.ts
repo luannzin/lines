@@ -5,8 +5,8 @@ export default {
       pt: "Deskline: acesso remoto sem servidor pra rodar",
     },
     description: {
-      en: "A free, open source remote desktop for Windows, macOS and Linux. No account and no server to run: paste someone's code, they accept, and you see their screen.",
-      pt: "Acesso remoto grátis e de código aberto pra Windows, macOS e Linux. Sem conta e sem servidor pra rodar: você cola o código de alguém, a pessoa aceita e você vê a tela dela.",
+      en: "A free, open source remote desktop for Windows, macOS and Linux. No account and no server to run: type someone's code, they accept, and you see their screen.",
+      pt: "Acesso remoto grátis e de código aberto pra Windows, macOS e Linux. Sem conta e sem servidor pra rodar: você digita o código de alguém, a pessoa aceita e você vê a tela dela.",
     },
     ogLocale: { en: "en_US", pt: "pt_BR" },
   },
@@ -16,8 +16,8 @@ export default {
       pt: "Acesso remoto sem servidor nenhum pra rodar.",
     },
     lead: {
-      en: "Every computer has a code. Paste someone's code, they accept, and you see their screen. With their OK you drive their mouse and keyboard, move files and hear their sound, on the same network or across the internet.",
-      pt: "Todo computador tem um código. Você cola o código de alguém, a pessoa aceita e você vê a tela dela. Com o OK dela, você usa o mouse e o teclado, passa arquivos e ouve o som, na mesma rede ou pela internet.",
+      en: "Every computer has a code. Type someone's code, they accept, and you see their screen. With their OK you drive their mouse and keyboard, move files and hear their sound, on the same network or across the internet.",
+      pt: "Todo computador tem um código. Você digita o código de alguém, a pessoa aceita e você vê a tela dela. Com o OK dela, você usa o mouse e o teclado, passa arquivos e ouve o som, na mesma rede ou pela internet.",
     },
     sent: {
       en: "If someone sent you here",
@@ -29,8 +29,8 @@ export default {
         pt: "Baixa o Deskline e abre.",
       },
       copy: {
-        en: "Click Copy code and send the code to whoever is helping you.",
-        pt: "Clica em Copiar código e manda o código pra quem está te ajudando.",
+        en: "Read your code out to whoever is helping you, or click Copy code and send it.",
+        pt: "Lê o seu código pra quem está te ajudando, ou clica em Copiar código e manda.",
       },
       accept: {
         en: "When they connect, click Accept.",
@@ -101,8 +101,8 @@ export default {
   try: {
     title: { en: "Try it here", pt: "Testa aqui" },
     lead: {
-      en: "Two copies of Deskline's window, made with this page and connected for real through your browser. Copy the code in the first one and paste it in the second.",
-      pt: "Duas cópias da janela do Deskline, feitas nesta página e conectadas de verdade pelo seu navegador. Copia o código da primeira e cola na segunda.",
+      en: "Two copies of Deskline's window, made with this page and connected for real through your browser. Type the code from the first one into the second.",
+      pt: "Duas cópias da janela do Deskline, feitas nesta página e conectadas de verdade pelo seu navegador. Digita o código da primeira na segunda.",
     },
     you: { en: "You", pt: "Você" },
     helper: { en: "Whoever is helping you", pt: "Quem está te ajudando" },
@@ -118,8 +118,8 @@ export default {
       pt: "O que cada sistema pede antes do Deskline compartilhar uma tela, pra você conseguir explicar pra alguém pelo telefone.",
     },
     windows: {
-      en: "SmartScreen stops a file it doesn't know yet: More info, then Run anyway. Then Copy code and send it. There's nothing else to allow.",
-      pt: "O SmartScreen barra um arquivo que ainda não conhece: Mais informações e depois Executar assim mesmo. Aí é Copiar código e mandar. Não tem mais nada pra permitir.",
+      en: "SmartScreen stops a file it doesn't know yet: More info, then Run anyway. Then they read you their code. There's nothing else to allow.",
+      pt: "O SmartScreen barra um arquivo que ainda não conhece: Mais informações e depois Executar assim mesmo. Aí a pessoa lê o código pra você. Não tem mais nada pra permitir.",
     },
     mac: {
       install: {
@@ -199,8 +199,8 @@ export default {
       address: {
         them: { en: "9-digit address", pt: "Endereço de 9 dígitos" },
         us: {
-          en: "A 52-character code you copy and paste, saved in Recent under a name you choose. There's no central server handing out short numbers, which is the point.",
-          pt: "Um código de 52 caracteres que você copia e cola, salvo em Recentes com o nome que você escolher. Não tem servidor central distribuindo números curtos, e a ideia é essa.",
+          en: "Nine digits too, new each time Deskline opens, and Recent keeps the computer under a name you choose. Nobody hands them out: each computer picks its own.",
+          pt: "Nove dígitos também, novos cada vez que o Deskline abre, e os Recentes guardam o computador com o nome que você escolher. Ninguém distribui: cada computador escolhe os seus.",
         },
       },
       accept: {
@@ -355,6 +355,10 @@ export default {
   news: {
     title: { en: "What's new", pt: "O que mudou" },
     releases: {
+      v0100: {
+        en: "Your code is nine digits you can read over the phone, new each time Deskline opens. The computer's long code is in Settings, Unattended access, for getting in with the password. Narrator, VoiceOver and Orca read the whole window, and Escape answers no to a prompt.",
+        pt: "O seu código são nove dígitos que dá pra ler pelo telefone, novos cada vez que o Deskline abre. O código longo do computador fica em Configurações, Acesso não supervisionado, pra entrar com a senha. O Narrador, o VoiceOver e o Orca leem a janela inteira, e o Esc responde não a uma pergunta.",
+      },
       v090: {
         en: "On a Mac, Deskline's home asks for Screen Recording and Accessibility before anyone connects, and Accessibility comes up when you accept someone who may control. Every release from here on is signed the same way, so macOS keeps those answers across updates. Settings has Report a problem, and an error has Report this beside it.",
         pt: "No Mac, o início do Deskline pede a Gravação de Tela e a Acessibilidade antes de alguém conectar, e a Acessibilidade aparece quando você aceita alguém que pode controlar. Daqui pra frente toda versão é assinada do mesmo jeito, então o macOS guarda essas respostas nas atualizações. As Configurações têm Relatar um problema, e um erro vem com Relatar isso do lado.",
@@ -394,8 +398,12 @@ export default {
     title: { en: "Who can get in", pt: "Quem consegue entrar" },
     rows: {
       key: {
-        en: "The code is the computer's public key. The connection is encrypted end to end with it, so you reach the computer whose code you pasted and nobody in between can read or change the session, the relays included.",
-        pt: "O código é a chave pública do computador. A conexão é criptografada de ponta a ponta com ela, então você chega no computador do código que colou e ninguém no meio consegue ler ou mudar a sessão, nem os relays.",
+        en: "Behind the nine digits is the computer's public key. The connection is encrypted end to end with it, so nobody in between can read or change the session, the relays included.",
+        pt: "Por trás dos nove dígitos tá a chave pública do computador. A conexão é criptografada de ponta a ponta com ela, então ninguém no meio consegue ler ou mudar a sessão, nem os relays.",
+      },
+      digits: {
+        en: "Whoever overhears the nine digits could point them at another computer, so check that the screen you get is theirs. Getting in still takes their Accept.",
+        pt: "Quem ouvir os nove dígitos pode apontar eles pra outro computador, então confere se a tela que chegou é da pessoa. Pra entrar, continua precisando do Aceitar dela.",
       },
       click: {
         en: "A session never starts without a click on Accept, the unattended-access password, or an Always allow you gave yourself.",
@@ -406,8 +414,8 @@ export default {
         pt: "Enquanto alguém está dentro, uma barra vermelha diz quem é e como parar: Parar de compartilhar, a um clique.",
       },
       server: {
-        en: "Nothing about your sessions goes to a server you don't run. Public relays help two computers find each other and carry the encrypted traffic when there's no direct path.",
-        pt: "Nada das suas sessões vai pra um servidor que não é seu. Relays públicos ajudam os dois computadores a se acharem e carregam o tráfego criptografado quando não tem caminho direto.",
+        en: "Nothing about your sessions goes to a server you don't run. Public relays help two computers find each other, the nine digits included, and carry the encrypted traffic when there's no direct path.",
+        pt: "Nada das suas sessões vai pra um servidor que não é seu. Relays públicos ajudam os dois computadores a se acharem, os nove dígitos inclusive, e carregam o tráfego criptografado quando não tem caminho direto.",
       },
     },
   },

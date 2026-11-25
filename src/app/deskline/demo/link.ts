@@ -14,8 +14,22 @@ export function linkQuality({ route, rttMs }: Stats) {
 
 const Z32 = "ybndrfg8ejkmcpqxot1uwisza345h769";
 
-/** 32 random bytes in z-base-32: 52 characters, like a Deskline code. */
+/** Nine random digits, as Deskline's home shows them: "123 456 789". */
 export function newCode() {
+  const [n] = crypto.getRandomValues(new BigUint64Array(1));
+  const digits = String(n % BigInt(1_000_000_000)).padStart(9, "0");
+  return digits.replace(/(\d{3})(?=\d)/g, "$1 ");
+}
+
+/** Accepts the nine digits with or without spaces or dashes, as Deskline does. */
+export function parseCode(text: string) {
+  const digits = text.replace(/[^0-9a-z]/gi, "");
+  return /^\d{9}$/.test(digits) ? digits : null;
+}
+
+/** 32 random bytes in z-base-32: 52 characters, a computer's key, of which the
+ * prompt shows the first eight. */
+export function newKey() {
   const bytes = crypto.getRandomValues(new Uint8Array(32));
   let out = "";
   let bits = 0;
@@ -31,17 +45,6 @@ export function newCode() {
   if (bits > 0) out += Z32[(value << (5 - bits)) & 31];
   return out;
 }
-
-/** Accepts the code with or without spaces or dashes, as Deskline does. */
-export function parseCode(text: string) {
-  const code = text.replace(/[^0-9a-z]/gi, "").toLowerCase();
-  return code.length === 52 && [...code].every((c) => Z32.includes(c))
-    ? code
-    : null;
-}
-
-/** Groups of four, as Deskline shows and copies it. */
-export const groups = (code: string) => code.match(/.{1,4}/g) ?? [];
 
 /** A computer name like the ones Windows gives out. */
 export function computerName() {

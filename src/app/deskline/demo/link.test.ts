@@ -1,13 +1,20 @@
 import { expect, test } from "bun:test";
-import { groups, linkQuality, newCode, parseCode } from "./link";
+import { linkQuality, newCode, newKey, parseCode } from "./link";
 
-test("a code is 52 z-base-32 characters and reads back with or without spaces", () => {
-  const code = newCode();
-  expect(code).toHaveLength(52);
-  expect(parseCode(code)).toBe(code);
-  expect(parseCode(groups(code).join("  ").toUpperCase())).toBe(code);
-  expect(parseCode(code.slice(1))).toBeNull();
-  expect(parseCode(`${code.slice(1)}l`)).toBeNull(); // "l" isn't in the alphabet
+test("a code is nine digits and reads back with or without spaces", () => {
+  for (let i = 0; i < 100; i++) {
+    const code = newCode();
+    expect(code).toMatch(/^\d{3} \d{3} \d{3}$/);
+    expect(parseCode(code)).toBe(code.replaceAll(" ", ""));
+  }
+  expect(parseCode("012-345-678")).toBe("012345678");
+  expect(parseCode("12345678")).toBeNull();
+  expect(parseCode("12345678a")).toBeNull();
+  expect(parseCode(newKey())).toBeNull(); // a long code isn't typed here
+});
+
+test("a key is 52 z-base-32 characters", () => {
+  expect(newKey()).toMatch(/^[ybndrfg8ejkmcpqxot1uwisza345h769]{52}$/);
 });
 
 test("link quality matches Deskline's measure", () => {

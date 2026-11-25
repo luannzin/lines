@@ -12,9 +12,9 @@ import { Dots, type LinkState } from "./dots";
 import {
   computerName,
   gathered,
-  groups,
   linkQuality,
   newCode,
+  newKey,
   parseCode,
   readStats,
   type Stats,
@@ -68,7 +68,7 @@ export function Demo({ locale }: { locale: Locale }) {
   useEffect(() => {
     setCode(newCode());
     setName(computerName());
-    setHelperCode(newCode());
+    setHelperCode(newKey());
     const mark = new Image();
     mark.src = "/deskline/mark.png";
     mark.onload = () => {
@@ -127,8 +127,8 @@ export function Demo({ locale }: { locale: Locale }) {
   const connect = async (text: string) => {
     const target = parseCode(text);
     if (!target) return setViewer({ kind: "idle", note: d.wrongCode });
-    if (target !== code)
-      return setViewer({ kind: "idle", note: d.unreachable });
+    if (target !== code.replaceAll(" ", ""))
+      return setViewer({ kind: "idle", note: d.nobody });
     setViewer({ kind: "waiting" });
     setLink({ kind: "forming" });
     try {
@@ -367,7 +367,6 @@ function HostWindow({
     return () => desktop.canvas.remove();
   }, [host.kind, desktop]);
 
-  const lines = groups(code);
   const point = (e: PointerEvent) => {
     const r = e.currentTarget.getBoundingClientRect();
     return {
@@ -418,17 +417,10 @@ function HostWindow({
       <div className="@container flex flex-1 flex-col gap-1 px-4 pt-6 pb-5">
         <h4 className="font-medium">{d.yourCode}</h4>
         <p className="text-foreground/70">{d.sendIt}</p>
-        {/* as large as three lines of it fit in the window, up to
-            Deskline's own 24px: read aloud over the phone */}
-        <p className="mt-4 select-all font-mono text-[clamp(0.875rem,5.6cqi,1.5rem)] leading-snug tracking-tight">
-          {[lines.slice(0, 5), lines.slice(5, 10), lines.slice(10)].map(
-            (row, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: three fixed lines
-              <span key={i} className="block whitespace-pre">
-                {row.join("  ") || " "}
-              </span>
-            ),
-          )}
+        {/* Deskline's own 24px, two spaces between the groups: read aloud
+            over the phone */}
+        <p className="mt-4 select-all whitespace-pre font-mono text-2xl leading-snug tracking-tight">
+          {code.replaceAll(" ", "  ") || " "}
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button
@@ -436,7 +428,7 @@ function HostWindow({
             disabled={!code}
             onClick={async () => {
               await navigator.clipboard
-                .writeText(lines.join(" "))
+                .writeText(code.replaceAll(" ", ""))
                 .catch(() => {});
               setCopied(true);
               setTimeout(() => setCopied(false), 2000);

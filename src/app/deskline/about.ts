@@ -9,6 +9,7 @@ export const REPO = "https://github.com/luannzin/deskline";
 
 /** The releases, newest first: version and the day it came out (GitHub's release dates). */
 export const RELEASES = [
+  ["0.10.0", "2026-11-25", "v0100"],
   ["0.9.0", "2026-11-24", "v090"],
   ["0.8.0", "2026-11-19", "v080"],
   ["0.7.0", "2026-11-19", "v070"],

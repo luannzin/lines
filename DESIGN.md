@@ -202,7 +202,7 @@ A neutral interface over a dusk art palette: the only hues on the page are drawn
 - **Body** (400, 16px): all reading text, in Paper Ink or Soft Ink; prose capped at `max-w-prose` (65ch).
 - **Control** (500, 14px from 640px, 16px below): coss button and input text.
 - **Mono** (400, 14px): file names, the round trip, a computer's short fingerprint, list markers.
-- **Code** (400, 5.6% of its window's content width between 14px and 24px, -0.025em): a computer's full code, in three lines of grouped quads, as large as the three lines fit, up to Deskline's own 24px, so it can be read aloud over the phone.
+- **Code** (400, 24px, -0.025em): a computer's nine digits on one line, two spaces between the groups of three, at Deskline's own 24px, so they can be read aloud over the phone.
 
 ### Named Rules
 **The One Size Rule.** Inter is 16px for everything you read. A heading gets weight 500 and full ink, never a larger size; the tagline is the single exception.

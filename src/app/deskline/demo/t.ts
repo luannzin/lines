@@ -4,22 +4,25 @@ export default {
   helper: { en: "The helper's computer", pt: "Computador de quem ajuda" },
   yourCode: { en: "Your code", pt: "Seu código" },
   sendIt: {
-    en: "Send it to whoever is helping you.",
-    pt: "Mande pra quem está te ajudando.",
+    en: "Read it out or send it to whoever is helping you.",
+    pt: "Leia em voz alta ou mande pra quem está te ajudando.",
   },
   copy: { en: "Copy code", pt: "Copiar código" },
   copied: { en: "Copied", pt: "Copiado" },
   connectTo: { en: "Connect to a computer", pt: "Conectar a um computador" },
-  paste: { en: "Paste their code", pt: "Cole o código da pessoa" },
+  paste: {
+    en: "Type or paste their code",
+    pt: "Digite ou cole o código da pessoa",
+  },
   connect: { en: "Connect", pt: "Conectar" },
   cancel: { en: "Cancel", pt: "Cancelar" },
   wrongCode: {
-    en: "That code doesn't look right. It's 52 letters and digits.",
-    pt: "Esse código não parece certo. São 52 letras e números.",
+    en: "That code doesn't look right. It's 9 digits, or 52 letters and digits.",
+    pt: "Esse código não parece certo. São 9 números, ou 52 letras e números.",
   },
-  unreachable: {
-    en: "Couldn't reach that computer. Is Deskline open there?",
-    pt: "Não deu pra achar aquele computador. O Deskline está aberto lá?",
+  nobody: {
+    en: "No computer is showing that code. Check the digits, and that Deskline is open on their computer.",
+    pt: "Nenhum computador está mostrando esse código. Confira os números e se o Deskline está aberto no computador da pessoa.",
   },
   waiting: {
     en: "Waiting for them to accept…",

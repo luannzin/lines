@@ -10,7 +10,7 @@
 - `page.tsx`: metadata, the steps, and the sections (The first time, Once you're in, Coming from AnyDesk, Who can get in, When something's wrong, What's new)
 - `public/deskline/install.sh` (repo root): the macOS install line's script, `curl -fsSL https://deskline.luannzin.com/install.sh | sh`. It downloads `Deskline-macos.zip` from the latest release with curl, which leaves no quarantine mark, so Gatekeeper doesn't stop it
 - `t.ts`: every string of the page, English and Brazilian Portuguese
-- `demo/`: the live piece. `demo.tsx` draws two copies of Deskline's window (each in the shared `Window`) and connects them with a real `RTCPeerConnection` pair (offer and answer handed across in memory, candidates gathered before each is sent); the first answers only after Accept and sends `desktop.ts`'s canvas as video, the second sends the pointer over a data channel. `link.ts`: the code (52 z-base-32 characters), the route and round trip from `getStats()`, and Deskline's link quality. `dots.tsx`: the link drawn as Deskline draws it (forming, live, lost). `t.ts`: the window's words, copied from Deskline's `src/i18n.rs`
+- `demo/`: the live piece. `demo.tsx` draws two copies of Deskline's window (each in the shared `Window`) and connects them with a real `RTCPeerConnection` pair (offer and answer handed across in memory, candidates gathered before each is sent); the first answers only after Accept and sends `desktop.ts`'s canvas as video, the second sends the pointer over a data channel. `link.ts`: the code (nine digits, as Deskline's home shows them since 0.10.0), the helper's key (52 z-base-32 characters, the prompt shows its first eight), the route and round trip from `getStats()`, and Deskline's link quality. `dots.tsx`: the link drawn as Deskline draws it (forming, live, lost). `t.ts`: the window's words, copied from Deskline's `src/i18n.rs`
 - `icon.png`, `opengraph-image.png` (+ `.alt.txt`): `assets/icon.png` and `assets/preview.png` from the Deskline repo, drawn by its `tools/logo.py`
 
 ## Local Contracts
@@ -23,4 +23,4 @@
 ## Verification
 
 - `bun test` covers `link.ts`
-- In the browser: copy the code, paste, Connect, Accept with and without "Let them control", move and click on the video, Take back control, Stop sharing, Disconnect, Decline, a wrong code
+- In the browser: type the code, or copy and paste it, Connect, Accept with and without "Let them control", move and click on the video, Take back control, Stop sharing, Disconnect, Decline, a malformed code, nine digits nobody shows
