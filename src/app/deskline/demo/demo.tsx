@@ -412,37 +412,42 @@ function HostWindow({
     );
 
   return (
-    <>
-      <TopBar />
-      <div className="@container flex flex-1 flex-col gap-1 px-4 pt-6 pb-5">
-        <h4 className="font-medium">{d.yourCode}</h4>
-        <p className="text-foreground/70">{d.sendIt}</p>
-        {/* Deskline's own 24px, two spaces between the groups: read aloud
+    // the prompt shares one grid cell with the page under it, so the window
+    // grows to whichever is taller instead of cutting the prompt off
+    <div className="grid flex-1 *:[grid-area:1/1]">
+      <div className="flex flex-col">
+        <TopBar />
+        <div className="@container flex flex-1 flex-col gap-1 px-4 pt-6 pb-5">
+          <h4 className="font-medium">{d.yourCode}</h4>
+          <p className="text-foreground/70">{d.sendIt}</p>
+          {/* Deskline's own 24px, two spaces between the groups: read aloud
             over the phone */}
-        <p className="mt-4 select-all whitespace-pre font-mono text-2xl leading-snug tracking-tight">
-          {code.replaceAll(" ", "  ") || " "}
-        </p>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <Button
-            ref={copyRef}
-            disabled={!code}
-            onClick={async () => {
-              await navigator.clipboard
-                .writeText(code.replaceAll(" ", ""))
-                .catch(() => {});
-              setCopied(true);
-              setTimeout(() => setCopied(false), 2000);
-            }}
-          >
-            {copied ? d.copied : d.copy}
-          </Button>
-          <p aria-live="polite" className="text-muted-foreground">
-            {host.kind === "idle" ? host.note : null}
+          <p className="mt-4 select-all whitespace-pre font-mono text-2xl leading-snug tracking-tight">
+            {code.replaceAll(" ", "  ") || " "}
           </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Button
+              ref={copyRef}
+              disabled={!code}
+              onClick={async () => {
+                await navigator.clipboard
+                  .writeText(code.replaceAll(" ", ""))
+                  .catch(() => {});
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+            >
+              {copied ? d.copied : d.copy}
+            </Button>
+            <p aria-live="polite" className="text-muted-foreground">
+              {host.kind === "idle" ? host.note : null}
+            </p>
+          </div>
         </div>
       </div>
       {host.kind === "asked" && (
-        <div className="absolute inset-0 grid place-items-center bg-black/55 p-4">
+        // positioned, so it paints over the page's own positioned parts
+        <div className="relative z-10 grid place-items-center bg-black/55 p-4">
           <div
             role="alertdialog"
             aria-labelledby="ask-title"
@@ -484,7 +489,7 @@ function HostWindow({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
